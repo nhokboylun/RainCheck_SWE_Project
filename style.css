@@ -1,165 +1,138 @@
 body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	background: linear-gradient(
-		  to right, 
-		  #FFCE00 0%, 
-		  #FFCE00 50%, 
-		  rgb(73,73,73)50%, 
-		  rgb(73,73,73) 100%
-		);
-	  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    to right,
+    #ffce00 0%,
+    #ffce00 50%,
+    #484a4e 50%,
+    #484a4e 100%
+  );
+  font-size: 16px;
+  color: #353030;
 }
- #rain {
-    color: #ecb510;
-    margin-left: 20px;
-    font-size: 40px;
- }
 
 .container {
-	display: flex;
-	height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .login-container {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding-bottom: 50px;
-	background-color: #FFCE00;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 50px;
+  background-color: #ffce00;
+  gap: 20px;
 }
 
-
-
-.login-container h2 {
-	margin-bottom: 75px;
+.login-container img {
+  margin-left: 170px;
+  width: 300px;
+  height: 70px;
 }
 
 .login-container form {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.login-container label {
-	margin-top: 10px;
+.need-fix {
+  display: grid;
+  grid-template-columns: 82fr 40fr;
+  width: 400px;
+  row-gap: 7px;
+}
+
+.need-fix p {
+  margin: 7px 0 14px 0;
+}
+
+.need-fix label {
+  grid-column: 1/-1;
+  margin-left: 2px;
+  margin-bottom: -4px;
 }
 
 .login-container input {
-	padding: 12px;
-	margin-top: 12px;
-	border-radius: 10px;
-	border: 1px solid #ccc;
-	width: 50%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  grid-column: 1/-1;
 }
 
-.login-container button {
-	padding: 10px 20px;
-	margin-top: 10px;
-	border-radius: 5px;
-	color: #fff;
-	border: none;
-	cursor: pointer;
+button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  width: 200px;
+  font-weight: 500;
+  font-size: 20px;
+  background-color: #3a57e8;
+  cursor: pointer;
 }
 
-#submit{
-    background-color: rgb(53, 48, 48);
+button:hover {
+  background-color: #353030;
 }
 
-.login-container button:hover {
-	background-color: #808c28;
+ion-icon:hover {
+  color: #353030;
 }
 
 .image-container {
-	flex: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: rgb(73,73,73);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image-container img {
-	max-width: 100%;
-	max-height: 100%;
-}
-
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .login-container, .image-container {
-    flex: 1;
-    height: 50vh;
-  }
-}
-
-.forgot-password {
-	margin-top: 10px;
-	font-size: 12px;
-	color: #666;
-}
-
-.forgot-password a {
-	color: rgb(53, 48, 48);
-	text-decoration: none;
-}
-
-.forgot-password a:hover {
-	text-decoration: underline;
+  width: 400px;
+  height: 400px;
 }
 
 .social-login {
-	margin-top: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.social-login p {
-	margin-bottom: 10px;
-	font-size: 14px;
-	color: rgb(53, 48, 48);
-}
-
-.google-btn, .facebook-btn {
-	padding: 10px 20px;
-	margin-top: 10px;
-	border-radius: 5px;
-	background-color: #fff;
-	color: #666;
-	border: 1px solid #ccc;
-	cursor: pointer;
-}
-
-.google-btn {
-	background-color: #dd4b39;
-	color: #fff;
-	border: none;
-}
-
-.google-btn:hover {
-	background-color: #c23321;
-}
-
-.facebook-btn {
-	background-color: #3b5998;
-	color: #fff;
-	border: none;
-}
-
-.facebook-btn:hover {
-	background-color: #2d4373;
-}
 .facebook {
-	width: 40px;
-	height: 40px;
-	color: #2154c2;
+  width: 40px;
+  height: 40px;
+  color: #2154c2;
 }
 .google {
-	width: 40px;
-	height: 40px;
-	color: #c22121;
+  width: 40px;
+  height: 40px;
+  color: #c22121;
+}
+.instagram {
+  width: 40px;
+  height: 40px;
+  color: #d62976;
+}
+.linkedin {
+  width: 40px;
+  height: 40px;
+  color: #0072b1;
+}
+
+a:link,
+a:visited {
+  color: #3a57e8;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  color: #353030;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

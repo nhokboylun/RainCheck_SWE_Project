@@ -1,0 +1,118 @@
+body {
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-columns: 40fr 60fr;
+  margin: auto;
+  background-image: linear-gradient(
+    to right,
+    #484a4e 0%,
+    #484a4e 40%,
+    #ffce00 40%,
+    #ffce00 100%
+  );
+}
+
+/* Left Part */
+
+.Left {
+  display: flex;
+  justify-content: center;
+}
+
+.Left img {
+  width: 400px;
+  height: 400px;
+  margin-top: 50px;
+}
+
+/* Right Part */
+
+form img {
+  width: 400px;
+  height: 100px;
+}
+
+.sign-up-form {
+  width: 70%;
+  margin: 0 auto;
+  padding-top: 25px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  column-gap: 20px;
+  row-gap: 15px;
+}
+
+form div,
+form img,
+form h1,
+form p,
+form button {
+  grid-column: 1/-1;
+  margin: 0 auto;
+}
+
+button {
+  background-color: #3a57e8;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 250px;
+  height: 40px;
+  font-size: 20px;
+}
+
+input {
+  height: 20px;
+  margin-left: -2px;
+  margin-top: -12px;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+form div {
+  display: flex;
+  width: 250px;
+  justify-content: space-around;
+}
+
+form div ion-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.facebook {
+  color: #2154c2;
+}
+.google {
+  color: #c22121;
+}
+.instagram {
+  color: #d62976;
+}
+.linkedin {
+  color: #0072b1;
+}
+
+a:link,
+a:visited {
+  color: #3a57e8;
+  text-decoration: none;
+}
+
+a:active,
+a:hover,
+ion-icon:active,
+ion-icon:hover {
+  color: #353030;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+button:active,
+button:hover {
+  background-color: #353030;
+}
