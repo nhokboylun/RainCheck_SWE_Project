@@ -1,0 +1,43 @@
+body {
+  font-family: "Roboto", sans-serif;
+  background-image: linear-gradient(
+    to bottom,
+    #484a4e 0%,
+    #484a4e 20%,
+    #ffce00 20%,
+    #ffce00 100%
+  );
+  height: 97.5vh;
+  position: relative;
+}
+
+.Logo {
+  width: 8%;
+  height: 10%;
+  float: left;
+}
+
+.Brand-Logo {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: bold;
+  width: 92%;
+  padding-top: 5%;
+  color: #fff;
+  text-align: center;
+}
+
+main {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  column-gap: 10%;
+  font-size: 24px;
+}
