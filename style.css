@@ -23,14 +23,16 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding-bottom: 50px;
   background-color: #ffce00;
   gap: 20px;
 }
 
 .login-container img {
-  margin-left: 170px;
-  width: 300px;
+  margin: 0 auto;
+  padding-right: 20px;
+  width: 280px;
   height: 70px;
 }
 
@@ -135,4 +137,24 @@ a:hover {
   color: #353030;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* CSS for Verification.html */
+
+.Verification-container p {
+  width: 60%;
+  font-weight: 600;
+  text-align: center;
+}
+
+.Verification-container ion-icon {
+  color: #2154c2;
+  margin: 0;
+  width: 150px;
+  height: 100px;
+}
+.Verification-container h1 {
+  margin: 0;
+  font-size: 58px;
+  color: #2154c2;
 }

@@ -48,12 +48,12 @@ form div,
 form img,
 form h1,
 form p,
-form button {
+#btn {
   grid-column: 1/-1;
   margin: 0 auto;
 }
 
-button {
+#btn {
   background-color: #3a57e8;
   color: white;
   font-weight: bold;
@@ -112,7 +112,7 @@ ion-icon:hover {
   text-underline-offset: 2px;
 }
 
-button:active,
-button:hover {
+#btn:active,
+#btn:hover {
   background-color: #353030;
 }
