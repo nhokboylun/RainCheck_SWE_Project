@@ -27,9 +27,10 @@ class DB {
     }
   
     public function get_access_token() {
-        $sql = $this->db->query("SELECT provider_value FROM google_oauth WHERE provider='google'");
-        $result = $sql->fetch_assoc();
-        return json_decode($result['provider_value']);
+        // $sql = $this->db->query("SELECT provider_value FROM google_oauth WHERE provider='google'");
+        // $result = $sql->fetch_assoc();
+        // return json_decode($result['provider_value']);
+        return json_decode('{"access_token":"ya29.a0AVvZVsrKx7upY9nUfaX9IuqlKs4uiNuT05nZRIR8KBZz9jnQyS9ZVu4GzJTHmu6_eBx6BjRmALI8bS0qC_C3ER_sU287YXS6Y-eL1Qy777swGA35xjJOGONtIPlgU12_8YXRimIAAXJrlRmzm9E-VQpqyphd1goXB8UaCgYKAZUSARASFQGbdwaI2Q7wP5z877c8j08H6icMVg0170","token_type":"Bearer","expires_in":3599,"expires_at":1677963139}');
     }
   
     public function get_refersh_token() {

@@ -4,7 +4,7 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
  
 send_email_to_user('nhoklunboy1@gmail.com');
- 
+
 function send_email_to_user($email) {
     require_once 'config.php';
  
@@ -13,7 +13,6 @@ function send_email_to_user($email) {
  
     try {
         $transport = Transport::fromDsn('gmail+smtp://'.urlencode('raincheckswe@gmail.com').':'.urlencode($arr_token['access_token']).'@default');
- 
         $mailer = new Mailer($transport);
  
         $message = (new Email())
