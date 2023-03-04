@@ -34,6 +34,7 @@
       $tel_c = $_POST['phonenumber'];
       $sql = "INSERT INTO Users (firstname, lastname, email,password,phonenumber) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c')";
     }
+    mysqli_query($conn, $sql);
     ob_end_flush();
     mysqli_close($conn);
     ?>
