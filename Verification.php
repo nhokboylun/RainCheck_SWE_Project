@@ -13,21 +13,20 @@
     ></script>
   </head>
   <body>
-    <?php
+    <?PHP
     /* Connect to database */
     ob_start(); //This is optional. require by our specific website host only.
     $servername = "localhost";
-    $username="id20358687_softwareengineeringspring2023";
+    $username="u647272286_swe2023";
     $password= "Heoboy123$%^&*(";
-    $db_name="id20358687_softwareengineering";
+    $db_name="u647272286_swe";
     $conn= new mysqli($servername, $username, $password, $db_name);
     if($conn->connect_error){
       die("connection failed".$conn->connect_error);
     }
-
+    
     /* Store data into database*/
-    if(isset($_POST['submit']))
-    {
+    if(isset($_POST['submit'])){
       $firstname_c =  $_POST['firstname'];
       $lastname_c =  $_POST['lastname'];
       $email_c =  $_POST['email'];
