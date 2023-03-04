@@ -139,7 +139,7 @@ a:hover {
   text-underline-offset: 2px;
 }
 
-/* CSS for Verification.html */
+/* CSS for Verification.php */
 
 .Verification-container p {
   width: 60%;
@@ -157,4 +157,51 @@ a:hover {
   margin: 0;
   font-size: 58px;
   color: #2154c2;
+}
+
+/* Css for ForgotPassword page */
+
+#btn-ForgotPassword {
+  background-color: #3a57e8;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 250px;
+  height: 50px;
+  font-size: 20px;
+}
+
+#btn-ForgotPassword:active,
+#btn-ForgotPassword:hover {
+  background-color: #353030;
+}
+
+#emailaddress {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.ForgotPassword-container {
+  gap: 15px;
+}
+
+.ForgotPassword-container label {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+#ForgotPassword-emailaddress {
+  width: 225px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.ForgotPassword-container {
+  width: 100%;
+}
+
+.ForgotPassword-container p {
+  margin: 0;
 }

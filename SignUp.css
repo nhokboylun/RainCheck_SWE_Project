@@ -20,9 +20,9 @@ body {
 }
 
 .Left img {
-  width: 400px;
-  height: 400px;
-  margin-top: 50px;
+  width: 80%;
+  height: 60%;
+  margin: auto 0;
 }
 
 /* Right Part */
@@ -115,4 +115,25 @@ ion-icon:hover {
 #btn:active,
 #btn:hover {
   background-color: #353030;
+}
+
+/* CSS for ResetPassword */
+.ResetPasswordPage {
+  height: 100vh;
+}
+
+.ResetPassword {
+  grid-template-columns: 1fr;
+  height: 80%;
+}
+
+.ResetPassword input {
+  height: 30px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.ResetPassword #btn {
+  width: 53%;
+  height: 50px;
 }
