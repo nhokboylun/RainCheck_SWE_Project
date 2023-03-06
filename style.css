@@ -153,6 +153,11 @@ a:hover {
   width: 150px;
   height: 100px;
 }
+
+.Verification-container form {
+  row-gap: 20px;
+}
+
 .Verification-container h1 {
   margin: 0;
   font-size: 58px;
