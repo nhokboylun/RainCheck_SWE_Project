@@ -14,6 +14,7 @@
   </head>
   <body>
     <?PHP
+    include 'SendMail.PHP';
     /* Connect to database */
     ob_start(); //This is optional. require by our specific website host only.
     $servername = "localhost";
@@ -24,12 +25,52 @@
     if($conn->connect_error){
       die("connection failed".$conn->connect_error);
     }
-    
-    /* Store data into database*/
+
+    /* User input verification code*/ 
+    if(isset($_POST['Verify'])){
+      $verify = $_POST['VerificationCode'];
+      $sqlcompare="SELECT Code FROM Users WHERE Code = $verify";
+      $resultVerify = $conn->query($sqlcompare);
+      if ($resultVerify->num_rows === 1) {
+        $sqlActive = "UPDATE Users SET EmailStatus = '1' WHERE Code = $verify;";
+        $sqlDelete ="UPDATE Users SET Code= 'NULL' WHERE Code = $verify;";
+        $conn->query($sqlActive);
+        $conn->query($sqlDelete);
+        ob_end_flush();
+        mysqli_close($conn);
+        header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+        exit();
+      } else {
+        echo '
+        <div class="container">
+        <div class="login-container Verification-container">
+          <img src="./Brand-Logo.png" alt="Placeholder Image" />
+          <h1>Failed !</h1>
+          <p>
+            You put the wrong code. Please hit the link below to Sign Up again.
+          </p>
+          <a href=https://melvin-projects.com/RainCheck_SWE_Project/SignUp.html>Sign Up</a>
+        </div>
+        <div class="image-container">
+          <img src="./Logo.png" alt="Placeholder Image" />
+        </div>
+      </div> 
+    </body>
+  </html>
+        ';
+        $codeDelete = $_POST['CodeToDelete'];
+        $sqlDeletee ="DELETE FROM Users WHERE Code = $codeDelete;";
+        $conn->query($sqlDeletee);
+        ob_end_flush();
+        mysqli_close($conn);
+        exit();
+      }
+    }
+    /* User come from sign up page. Store data into database*/
     if(isset($_POST['submit'])){
       $code = str_pad(rand(0, 499999), 6, '0', STR_PAD_LEFT);
-      while (false){
-        $sqlCheck = "SELECT * FROM mytable WHERE code = $code";
+      while (true){
+        $sqlCheck = "SELECT Code FROM Users WHERE Code = $code";
         $result = $conn->query($sqlCheck);
         if ($result->num_rows == 0) {
           break;
@@ -42,38 +83,9 @@
       $password_c = $_POST['pass'];
       $tel_c = $_POST['phonenumber'];
       $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c', '$code')";
+      sendmail($_POST['email'], $code);
+      mysqli_query($conn, $sql);
     }
-    mysqli_query($conn, $sql);
-    /* Send Confirmation email for user*/
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-
-    require 'phpmailer/src/Exception.php';
-    require 'phpmailer/src/PHPMailer.php';
-    require 'phpmailer/src/SMTP.php';
-
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = "raincheckswe@gmail.com";
-    $mail->Password = "uzjzhymleiatmfkc";
-    $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
-
-    $mail->setFrom('raincheckswe@gmail.com');
-
-    $mail->addAddress($_POST['email']);
-
-    $mail->isHTML(true);
-
-    $mail->Subject = "Rain Check";
-    $mail->Body = "Here is your verification code: $code";
-
-    $mail->send();
-    // if(isset($_POST['verified'])){
-
-    // }
     ob_end_flush();
     mysqli_close($conn);
     ?>
@@ -84,8 +96,7 @@
         <h1>Success !</h1>
         <p>
           An email has been sent to your email address. Please check your inbox
-          for an email from the company and click on the link provided to verify
-          your email. Once verified, please follow the instructions to sign in.
+          for an email from our company and then put your verification code down below.
         </p>
         <form 
           class="Verification-form"
@@ -93,8 +104,9 @@
           action="Verification.php"
           method="POST"
         >
-          <input type="text" name="VerificationCode" placeholder="VerificationCode" />
-          <input type="submit" name="Verify" value="Verify">
+          <input style="width: 226px" type="text" name="VerificationCode" placeholder="Verification Code" />
+          <input type="submit" id="btn-ForgotPassword" name="Verify" value="Verify">
+          <input type="hidden" name="CodeToDelete" value="<?PHP echo $code; ?>">
         </form>
       </div>
       <div class="image-container">
