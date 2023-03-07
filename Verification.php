@@ -14,7 +14,7 @@
   </head>
   <body>
     <?PHP
-    include 'SendMail.PHP';
+    include 'SendMail.php';
     /* Connect to database */
     ob_start(); //This is optional. require by our specific website host only.
     $servername = "localhost";
@@ -88,9 +88,24 @@
           mysqli_close($conn);
           exit();
         } else {
+          echo '
+          <div class="container">
+          <div class="login-container Verification-container">
+            <img src="./Brand-Logo.png" alt="Placeholder Image" />
+            <h1>Failed !</h1>
+            <p>
+              You put the wrong code. Please hit the link below so you can start over.
+            </p>
+            <a href=https://melvin-projects.com/RainCheck_SWE_Project/ForgotPassword.html>Start Over</a>
+          </div>
+          <div class="image-container">
+            <img src="./Logo.png" alt="Placeholder Image" />
+          </div>
+        </div> 
+      </body>
+    </html>';
           ob_end_flush();
           mysqli_close($conn);
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.html");
           exit();
         }
       }
