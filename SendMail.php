@@ -1,7 +1,7 @@
 <?PHP 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
-    function sendmail($email, $code){
+    function sendmail($email, $code, $Tran){
 
     require 'phpmailer/src/Exception.php';
     require 'phpmailer/src/PHPMailer.php';
@@ -11,12 +11,8 @@
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    // $mail->Username = "nhoklunboy@gmail.com";
-    // $mail->Password = "kfhqeoncmklywiha";
-    // $mail->Username = "nhoklunboy1@gmail.com";
-    // $mail->Password = "bznjzhixcroowkiw";
     $mail->Username = "raincheckswe@gmail.com"; 
-    $mail->Password = "dqjmobqodooppsgo";
+    $mail->Password = $Tran;
 
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;

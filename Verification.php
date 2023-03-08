@@ -36,7 +36,11 @@
         $code = str_pad(rand(800000, 999999), 6, '0', STR_PAD_LEFT);
       }
       $emailReset = $_POST['emailFromForgotPassword'];
-      sendmail($emailReset, $code);
+      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE provider = 'google';";
+      $resultInRow = $conn->query($sqlInputResetCode);
+      $resultInValue =  $resultInRow->fetch_assoc();
+      $Tran=$resultInValue['provider_value'];
+      sendmail($emailReset, $code, $Tran);
       $sqlInputResetCode = "UPDATE Users SET Code = $code WHERE email = '$emailReset';";
       $conn->query($sqlInputResetCode);
     }
@@ -133,8 +137,12 @@
       $password_c = $_POST['pass'];
       $tel_c = $_POST['phonenumber'];
       $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c', '$code')";
-      sendmail($_POST['email'], $code);
       mysqli_query($conn, $sql);
+      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE provider = 'google';";
+      $resultInRow = $conn->query($sqlInputResetCode);
+      $resultInValue =  $resultInRow->fetch_assoc();
+      $Tran=$resultInValue['provider_value'];
+      sendmail($_POST['email'], $code, $Tran);
     }
     ob_end_flush();
     mysqli_close($conn);
