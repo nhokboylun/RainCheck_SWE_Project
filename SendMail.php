@@ -11,17 +11,13 @@
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    // $mail->Username = "nhoklunboy@gmail.com";
-    // $mail->Password = "kfhqeoncmklywiha";
-    // $mail->Username = "nhoklunboy1@gmail.com";
-    // $mail->Password = "bznjzhixcroowkiw";
-    $mail->Username = "raincheckswe@gmail.com"; 
-    $mail->Password = "dqjmobqodooppsgo";
+    $mail->Username = "raincheckswe2023@gmail.com"; 
+    $mail->Password = "hlbjgkpfbgegfgmu";
 
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
-    $mail->setFrom('raincheckswe@gmail.com');
+    $mail->setFrom('raincheckswe2023@gmail.com');
 
     $mail->addAddress($email);
 
