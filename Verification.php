@@ -108,8 +108,11 @@
         </div> 
       </body>
     </html>';
+<<<<<<< HEAD
           $sqlResetFailed ="UPDATE Users SET Code= NULL WHERE Code = $codeDelete;";
           $conn->query($sqlResetFailed);
+=======
+>>>>>>> 33b18faabdc10ed7b67852b65ee12e5970cdb5e0
           ob_end_flush();
           mysqli_close($conn);
           exit();
