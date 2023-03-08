@@ -14,7 +14,7 @@
   </head>
   <body>
     <?PHP
-    include 'SendMail.PHP';
+    include 'SendMail.php';
     /* Connect to database */
     ob_start(); //This is optional. require by our specific website host only.
     $servername = "localhost";
@@ -49,7 +49,7 @@
       if ($resultVerify->num_rows === 1){
         if ($verify < 800000 && $verify > 0) {
           $sqlActive = "UPDATE Users SET EmailStatus = '1' WHERE Code = $verify;";
-          $sqlDelete ="UPDATE Users SET Code= 'NULL' WHERE Code = $verify;";
+          $sqlDelete ="UPDATE Users SET Code= NULL WHERE Code = $verify;";
           $conn->query($sqlActive);
           $conn->query($sqlDelete);
           ob_end_flush();
@@ -57,9 +57,13 @@
           header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
           exit();
         } else if ($verify >= 800000){
+          $sql="SELECT email FROM Users WHERE Code = $verify";
+          $resultInRow=$conn->query($sql);
+          $resultInValue =  $resultInRow->fetch_assoc();
+          $email=$resultInValue['email'];
           ob_end_flush();
           mysqli_close($conn);
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.html");
+          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.php?email=".$email."&code=".($verify*2));
           exit();
         }
       } else {
@@ -88,9 +92,26 @@
           mysqli_close($conn);
           exit();
         } else {
+          echo '
+          <div class="container">
+          <div class="login-container Verification-container">
+            <img src="./Brand-Logo.png" alt="Placeholder Image" />
+            <h1>Failed !</h1>
+            <p>
+              You put the wrong code. Please hit the link below so you can start over.
+            </p>
+            <a href=https://melvin-projects.com/RainCheck_SWE_Project/ForgotPassword.html>Start Over</a>
+          </div>
+          <div class="image-container">
+            <img src="./Logo.png" alt="Placeholder Image" />
+          </div>
+        </div> 
+      </body>
+    </html>';
+          $sqlResetFailed ="UPDATE Users SET Code= NULL WHERE Code = $codeDelete;";
+          $conn->query($sqlResetFailed);
           ob_end_flush();
           mysqli_close($conn);
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.html");
           exit();
         }
       }

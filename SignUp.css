@@ -124,7 +124,8 @@ ion-icon:hover {
 
 .ResetPassword {
   grid-template-columns: 1fr;
-  height: 80%;
+  height: 50%;
+  padding-top: 15%;
 }
 
 .ResetPassword input {
