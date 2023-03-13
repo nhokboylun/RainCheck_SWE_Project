@@ -16,7 +16,12 @@
     <div class="container">
       <div class="login-container">
         <img src="./Brand-Logo.png" alt="Placeholder Image" />
-        <form>
+        <form
+          class="sign-in-form"
+          name="SignInForm"
+          action="SignIn.php"
+          method="POST"
+        >
           <h1>Sign In</h1>
           <div class="need-fix">
             <label for="email">Email</label>
@@ -25,8 +30,14 @@
             <input type="password" id="password" name="password" />
             <p><input type="checkbox" />Remember Me</p>
             <p><a href="./ForgotPassword.html">Forgot Password?</a></p>
+            <button
+              class="submitBtnSignIn"
+              type="submit"
+              name="submitFromSignIn"
+            >
+              Sign In
+            </button>
           </div>
-          <button type="submit">Sign In</button>
           <div class="social-login">
             <p>Or sign in with:</p>
             <div>

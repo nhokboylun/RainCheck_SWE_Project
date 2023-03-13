@@ -15,6 +15,7 @@
   <body>
     <?PHP
     include 'SendMail.php';
+    if(isset($_POST['submitFromForgotPassword'])||isset($_POST['submit'])||isset($_POST['Verify'])){
     /* Connect to database */
     ob_start(); //This is optional. require by our specific website host only.
     $servername = "localhost";
@@ -146,6 +147,9 @@
     }
     ob_end_flush();
     mysqli_close($conn);
+    } else {
+      header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+    }
     ?>
     <div class="container">
       <div class="login-container Verification-container">

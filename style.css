@@ -82,6 +82,11 @@ button:hover {
   background-color: #353030;
 }
 
+.submitBtnSignIn {
+  grid-column: 1/-1;
+  margin: 0 auto;
+}
+
 ion-icon:hover {
   color: #353030;
 }
