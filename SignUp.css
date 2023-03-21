@@ -34,7 +34,6 @@ form img {
 .sign-up-form {
   width: 70%;
   margin: 0 auto;
-  padding-top: 25px;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -86,10 +85,12 @@ form div ion-icon {
 .password-requirements {
   list-style-type: none;
   padding: 0;
+  justify-self: center;
+  margin: 5px 0;
 }
 
 .password-requirements li {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .not-matched {
@@ -99,7 +100,6 @@ form div ion-icon {
 .matched {
   color: green;
 }
-
 
 .facebook {
   color: #2154c2;

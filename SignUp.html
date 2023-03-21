@@ -18,9 +18,13 @@
       function validatePassword() {
         const password = document.getElementsByName("pass")[0];
         const confirmPassword = document.getElementsByName("confirmPass")[0];
-        const passwordRequirements = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+        const passwordRequirements =
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
-        if (!passwordRequirements.test(password.value) || !passwordRequirements.test(confirmPassword.value)) {
+        if (
+          !passwordRequirements.test(password.value) ||
+          !passwordRequirements.test(confirmPassword.value)
+        ) {
           alert(
             "Password and Confirm Password must be at least 8 characters long, contain one upper case letter, one lower case letter, one number, and one special character."
           );
@@ -62,9 +66,9 @@
       }
 
       function formatPhoneNumber(event) {
-        const phoneNumber = event.target.value.replace(/\D/g, '');
+        const phoneNumber = event.target.value.replace(/\D/g, "");
         const formattedPhoneNumber = phoneNumber
-          .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+          .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
           .substring(0, 14);
         event.target.value = formattedPhoneNumber;
       }
@@ -73,7 +77,7 @@
   <body>
     <div class="Left"><img src="./Logo.png" alt="Logo" /></div>
     <form
-      class="sign-up-form"
+      class="sign-up-form sign-up-form-special"
       name="SignUpForm"
       action="Verification.php"
       method="POST"
@@ -84,24 +88,42 @@
       <p>Create your RainCheck account here!</p>
       <label>First Name</label>
       <label>Last Name</label>
-      <input type="text" name="firstname" />
-      <input type="text" name="lastname" />
+      <input type="text" name="firstname" required />
+      <input type="text" name="lastname" required />
       <label>Phone Number</label>
       <label>Email Address</label>
-      <input type="tel" name="phonenumber" oninput="formatPhoneNumber(event)" />
-      <input type="email" name="email" />
+      <input type="email" name="email" required />
+      <input
+        type="tel"
+        name="phonenumber"
+        oninput="formatPhoneNumber(event)"
+        required
+      />
       <label>Password</label>
       <label>Confirm Password</label>
-      <input type="password" name="pass" oninput="updateRequirements()" />
-      <input type="password" name="confirmPass" />
-      <ul class="password-requirements">
+      <input
+        type="password"
+        name="pass"
+        oninput="updateRequirements()"
+        required
+      />
+      <input type="password" name="confirmPass" required />
+      <ul style="width: 218.64px" class="password-requirements">
         <li id="length" class="not-matched">8 characters minimum</li>
         <li id="upperCase" class="not-matched">One uppercase letter</li>
         <li id="lowerCase" class="not-matched">One lowercase letter</li>
-        <li id="number" class="not-matched">One number</li>
-        <li id="specialChar" class="not-matched">One special character (!@#$%^&*)</li>
       </ul>
-      
+
+      <ul class="password-requirements">
+        <li id="number" class="not-matched">One number</li>
+        <li id="specialChar" class="not-matched">
+          One special character (!@#$%^&*)
+        </li>
+        <li id="confirm-password" class="not-matched">
+          Confirm password match password
+        </li>
+      </ul>
+
       <p><input type="checkbox" />I agree with the terms of use</p>
       <input type="submit" id="btn" value="Sign Up" name="submit" />
       <p>or sign up with</p>
