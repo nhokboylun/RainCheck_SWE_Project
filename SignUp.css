@@ -20,7 +20,7 @@ body {
 }
 
 .Left img {
-  width: 80%;
+  max-width: 400px;
   margin: auto 0;
 }
 

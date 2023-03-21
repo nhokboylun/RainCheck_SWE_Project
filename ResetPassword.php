@@ -74,26 +74,36 @@
       }
 
       function updateRequirements() {
-        const password = document.getElementsByName("pass")[0].value;
-        const requirements = {
-          length: /(?=.{8,})/,
-          lowerCase: /(?=.*[a-z])/,
-          upperCase: /(?=.*[A-Z])/,
-          number: /(?=.*\d)/,
-          specialChar: /(?=.*[!@#$%^&*])/,
-        };
+      const password = document.getElementsByName("pass")[0].value;
+      const confirmPassword = document.getElementsByName("confirmPass")[0].value;
+      const requirements = {
+        length: /(?=.{8,})/,
+        lowerCase: /(?=.*[a-z])/,
+        upperCase: /(?=.*[A-Z])/,
+        number: /(?=.*\d)/,
+        specialChar: /(?=.*[!@#$%^&*])/,
+      };
 
-        for (const key in requirements) {
-          const reqElement = document.getElementById(key);
-          if (requirements[key].test(password)) {
-            reqElement.classList.add("matched");
-            reqElement.classList.remove("not-matched");
-          } else {
-            reqElement.classList.add("not-matched");
-            reqElement.classList.remove("matched");
-          }
+      for (const key in requirements) {
+        const reqElement = document.getElementById(key);
+        if (requirements[key].test(password)) {
+          reqElement.classList.add("matched");
+          reqElement.classList.remove("not-matched");
+        } else {
+          reqElement.classList.add("not-matched");
+          reqElement.classList.remove("matched");
         }
       }
+
+      const confirmPasswordElement = document.getElementById("confirm-password");
+      if (password === confirmPassword && confirmPassword !== '') {
+        confirmPasswordElement.classList.add("matched");
+        confirmPasswordElement.classList.remove("not-matched");
+      } else {
+        confirmPasswordElement.classList.add("not-matched");
+        confirmPasswordElement.classList.remove("matched");
+      }
+    }
     </script>
   </head>
   <body class="ResetPasswordPage">
@@ -102,18 +112,17 @@
       <img src="./Brand-Logo.png" alt="Brand Logo" />
       <h1>Reset Password</h1>
       <input type="password" name="pass" placeholder="New Password" oninput="updateRequirements()" required/>
-      <input type="password" placeholder="Confirm Password" required/>
       <ul style="width: 218.64px" class="password-requirements">
         <li id="length" class="not-matched">8 characters minimum</li>
         <li id="upperCase" class="not-matched">One uppercase letter</li>
         <li id="lowerCase" class="not-matched">One lowercase letter</li>
-      </ul>
-
-      <ul class="password-requirements">
         <li id="number" class="not-matched">One number</li>
         <li id="specialChar" class="not-matched">
           One special character (!@#$%^&*)
         </li>
+      </ul>
+      <input type="password" placeholder="Confirm Password" oninput="updateRequirements()" required/>
+      <ul class="password-requirements"> 
         <li id="confirm-password" class="not-matched">
           Confirm password match password
         </li>

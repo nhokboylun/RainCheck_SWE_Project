@@ -47,26 +47,36 @@
       }
 
       function updateRequirements() {
-        const password = document.getElementsByName("pass")[0].value;
-        const requirements = {
-          length: /(?=.{8,})/,
-          lowerCase: /(?=.*[a-z])/,
-          upperCase: /(?=.*[A-Z])/,
-          number: /(?=.*\d)/,
-          specialChar: /(?=.*[!@#$%^&*])/,
-        };
+  const password = document.getElementsByName("pass")[0].value;
+  const confirmPassword = document.getElementsByName("confirmPass")[0].value;
+  const requirements = {
+    length: /(?=.{8,})/,
+    lowerCase: /(?=.*[a-z])/,
+    upperCase: /(?=.*[A-Z])/,
+    number: /(?=.*\d)/,
+    specialChar: /(?=.*[!@#$%^&*])/,
+  };
 
-        for (const key in requirements) {
-          const reqElement = document.getElementById(key);
-          if (requirements[key].test(password)) {
-            reqElement.classList.add("matched");
-            reqElement.classList.remove("not-matched");
-          } else {
-            reqElement.classList.add("not-matched");
-            reqElement.classList.remove("matched");
-          }
-        }
-      }
+  for (const key in requirements) {
+    const reqElement = document.getElementById(key);
+    if (requirements[key].test(password)) {
+      reqElement.classList.add("matched");
+      reqElement.classList.remove("not-matched");
+    } else {
+      reqElement.classList.add("not-matched");
+      reqElement.classList.remove("matched");
+    }
+  }
+
+  const confirmPasswordElement = document.getElementById("confirm-password");
+  if (password === confirmPassword && confirmPassword !== '') {
+    confirmPasswordElement.classList.add("matched");
+    confirmPasswordElement.classList.remove("not-matched");
+  } else {
+    confirmPasswordElement.classList.add("not-matched");
+    confirmPasswordElement.classList.remove("matched");
+  }
+}
 
       function formatPhoneNumber(event) {
         const phoneNumber = event.target.value.replace(/\D/g, "");
@@ -110,7 +120,7 @@
         oninput="updateRequirements()"
         required
       />
-      <input type="password" name="confirmPass" required />
+      <input type="password" name="confirmPass" oninput="updateRequirements()" required />
       <ul style="width: 218.64px" class="password-requirements">
         <li id="length" class="not-matched">8 characters minimum</li>
         <li id="upperCase" class="not-matched">One uppercase letter</li>
