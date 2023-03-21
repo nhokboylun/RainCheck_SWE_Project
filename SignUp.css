@@ -21,7 +21,6 @@ body {
 
 .Left img {
   width: 80%;
-  height: 60%;
   margin: auto 0;
 }
 
@@ -83,6 +82,24 @@ form div ion-icon {
   width: 50px;
   height: 50px;
 }
+
+.password-requirements {
+  list-style-type: none;
+  padding: 0;
+}
+
+.password-requirements li {
+  font-size: 12px;
+}
+
+.not-matched {
+  color: red;
+}
+
+.matched {
+  color: green;
+}
+
 
 .facebook {
   color: #2154c2;
