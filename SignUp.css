@@ -3,13 +3,11 @@ body {
   display: grid;
   grid-template-columns: 40fr 60fr;
   margin: auto;
-  background-image: linear-gradient(
-    to right,
-    #484a4e 0%,
-    #484a4e 40%,
-    #ffce00 40%,
-    #ffce00 100%
-  );
+  background-image: linear-gradient(to right,
+      #484a4e 0%,
+      #484a4e 40%,
+      #ffce00 40%,
+      #ffce00 100%);
 }
 
 /* Left Part */
@@ -104,12 +102,15 @@ form div ion-icon {
 .facebook {
   color: #2154c2;
 }
+
 .google {
   color: #c22121;
 }
+
 .instagram {
   color: #d62976;
 }
+
 .linkedin {
   color: #0072b1;
 }

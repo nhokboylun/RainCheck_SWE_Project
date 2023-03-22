@@ -26,4 +26,3 @@
     header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
     exit();
   }
-?>

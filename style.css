@@ -2,13 +2,11 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(
-    to right,
-    #ffce00 0%,
-    #ffce00 50%,
-    #484a4e 50%,
-    #484a4e 100%
-  );
+  background: linear-gradient(to right,
+      #ffce00 0%,
+      #ffce00 50%,
+      #484a4e 50%,
+      #484a4e 100%);
   font-size: 16px;
   color: #353030;
 }
@@ -115,16 +113,19 @@ ion-icon:hover {
   height: 40px;
   color: #2154c2;
 }
+
 .google {
   width: 40px;
   height: 40px;
   color: #c22121;
 }
+
 .instagram {
   width: 40px;
   height: 40px;
   color: #d62976;
 }
+
 .linkedin {
   width: 40px;
   height: 40px;
