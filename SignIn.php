@@ -11,11 +11,14 @@
     }
     $username_c = $_POST["username"];
     $password_c = $_POST["password"];
+    $sqlCheckMatchPassword = "SELECT password FROM Users WHERE email ='$username_c'";
+    $resultCheckMatchPassword= $conn->query($sqlCheckMatchPassword);
+    $db_password = $resultCheckMatchPassword->fetch_assoc()['password'];
     $sql= "SELECT email FROM Users WHERE email = '$username_c' AND password = '$password_c' AND EmailStatus = 1";
     $result = $conn->query($sql);
     ob_end_flush();
     mysqli_close($conn);
-    if ($result->num_rows === 1){
+    if ($result->num_rows === 1 && strcmp($password_c,$db_password) == 0){
       header("Location: https://melvin-projects.com/RainCheck_SWE_Project/Home.html");
       exit();
     } 
