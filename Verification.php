@@ -6,6 +6,12 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+      function formatPhoneNumber(event) {
+        const codeNumber = event.target.value.replace(/\D/g, "");
+        event.target.value = codeNumber;
+      }
+  </script>
 </head>
 
 <body>
@@ -23,6 +29,19 @@
       die("connection failed" . $conn->connect_error);
     }
     if (isset($_POST['submitFromForgotPassword'])) {
+      $emailReset = $_POST['emailFromForgotPassword'];
+      $sqlCheck = "SELECT email FROM Users WHERE email=?";
+      $stmt = $conn->prepare($sqlCheck);
+      $stmt->bind_param("s", $emailReset);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows == 0) {
+        ob_end_flush();
+        mysqli_close($conn);
+        echo "<script>alert('The email address you input is not registered yet. Please Try Again!')</script>";
+        echo "<p>You are being redirected to the previous page.</p>";
+        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck_SWE_Project/ForgotPassword.html'>";
+      }
       $code = str_pad(rand(800000, 999999), 6, '0', STR_PAD_LEFT);
       while (true) {
         $sqlCheck = "SELECT Code FROM Users WHERE Code = $code";
@@ -32,7 +51,6 @@
         }
         $code = str_pad(rand(800000, 999999), 6, '0', STR_PAD_LEFT);
       }
-      $emailReset = $_POST['emailFromForgotPassword'];
       $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE provider = 'google';";
       $resultInRow = $conn->query($sqlInputResetCode);
       $resultInValue =  $resultInRow->fetch_assoc();
@@ -119,6 +137,19 @@
     }
     /* User come from sign up page. Store data into database*/
     if (isset($_POST['submit'])) {
+      $email_c = $_POST['email'];
+      $sqlCheck = "SELECT email FROM Users WHERE email=?";
+      $stmt = $conn->prepare($sqlCheck);
+      $stmt->bind_param("s", $email_c);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows == 1) {
+        ob_end_flush();
+        mysqli_close($conn);
+        echo "<script>alert('The email address you input is already registered. Please use another email!')</script>";
+        echo "<p>You are being redirected to the previous page.</p>";
+        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck_SWE_Project/SignUp.html'>";
+      }
       $code = str_pad(rand(1, 799999), 6, '0', STR_PAD_LEFT);
       while (true) {
         $sqlCheck = "SELECT Code FROM Users WHERE Code = $code";
@@ -130,7 +161,6 @@
       }
       $firstname_c =  $_POST['firstname'];
       $lastname_c =  $_POST['lastname'];
-      $email_c =  $_POST['email'];
       $password_c = $_POST['pass'];
       $tel_c = $_POST['phonenumber'];
       $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c', '$code')";
@@ -157,7 +187,7 @@
         for an email from our company and then put your verification code down below.
       </p>
       <form class="Verification-form" name="Verification" action="Verification.php" method="POST">
-        <input style="width: 226px" type="text" name="VerificationCode" placeholder="Verification Code" maxlength="6" />
+        <input style="width: 226px" type="text" name="VerificationCode" placeholder="Verification Code" maxlength="6" oninput="formatPhoneNumber(event)" required/>
         <input type="submit" id="btn-ForgotPassword" name="Verify" value="Verify">
         <input type="hidden" name="CodeToDelete" value="<?PHP echo $code; ?>">
       </form>
