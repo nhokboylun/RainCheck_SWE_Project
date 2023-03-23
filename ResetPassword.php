@@ -116,7 +116,7 @@ if ((isset($_POST['pass'])) || (isset($_GET['email']) && isset($_GET['code']))) 
         One special character (!@#$%^&*)
       </li>
     </ul>
-    <input type="password" placeholder="Confirm Password" oninput="updateRequirements()" required />
+    <input type="password" name="confirmPass" placeholder="Confirm Password" oninput="updateRequirements()" required/>
     <ul class="password-requirements">
       <li id="confirm-password" class="not-matched">
         Confirm password match password
