@@ -82,7 +82,10 @@
           $email = $resultInValue['email'];
           ob_end_flush();
           mysqli_close($conn);
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.php?email=" . $email . "&code=" . ($verify * 2));
+          session_start();
+          $_SESSION['email']=$email;
+          $_SESSION['verify']=$verify*2;
+          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.php");
           exit();
         }
       } else {

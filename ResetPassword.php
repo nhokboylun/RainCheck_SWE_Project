@@ -1,29 +1,30 @@
 <?PHP
-if ((isset($_POST['pass'])) || (isset($_GET['email']) && isset($_GET['code']))) {
-  if (isset($_POST['submitFromResetPassword'])) {
-    ob_start();
-    $servername = "localhost";
-    $username = "u647272286_swe2023";
-    $password = "Heoboy123$%^&*(";
-    $db_name = "u647272286_swe";
-    $conn = new mysqli($servername, $username, $password, $db_name);
-    if ($conn->connect_error) {
-      die("connection failed" . $conn->connect_error);
-    }
-    $pass = $_POST['pass'];
-    $email = $_POST['secretValue1'];
-    $code = $_POST['secretValue2'];
-    $code = $code / 2;
-    $sql = "UPDATE Users SET password='$pass' WHERE email= '$email' AND code = $code AND EmailStatus = 1";
-    $conn->query($sql);
-    $sql = "UPDATE Users SET code = NULL WHERE code = $code";
-    $conn->query($sql);
-    ob_end_flush();
-    mysqli_close($conn);
-    header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
-    exit();
+session_start();
+if (isset($_POST['submitFromResetPassword'])) {
+  ob_start();
+  $servername = "localhost";
+  $username = "u647272286_swe2023";
+  $password = "Heoboy123$%^&*(";
+  $db_name = "u647272286_swe";
+  $conn = new mysqli($servername, $username, $password, $db_name);
+  if ($conn->connect_error) {
+    die("connection failed" . $conn->connect_error);
   }
-} else {
+  $pass = $_POST['pass'];
+  $email = $_POST['secretValue1'];
+  $code = $_POST['secretValue2'];
+  $code = $code / 2;
+  $sql = "UPDATE Users SET password='$pass' WHERE email= '$email' AND code = $code AND EmailStatus = 1";
+  $conn->query($sql);
+  $sql = "UPDATE Users SET code = NULL WHERE code = $code";
+  $conn->query($sql);
+  ob_end_flush();
+  mysqli_close($conn);
+  session_destroy();
+  header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+  exit();
+}
+if (!isset($_SESSION['email'])){
   header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
 }
 ?>
@@ -123,10 +124,8 @@ if ((isset($_POST['pass'])) || (isset($_GET['email']) && isset($_GET['code']))) 
       </li>
     </ul>
     <input type="submit" id="btn" value="Reset" name="submitFromResetPassword" />
-    <input type="hidden" name="secretValue1" value="<?PHP $email = $_GET['email'];
-                                                    echo $email; ?>">
-    <input type="hidden" name="secretValue2" value="<?PHP $code = $_GET['code'];
-                                                    echo $code; ?>">
+    <input type="hidden" name="secretValue1" value="<?PHP $email=$_SESSION['email']; echo $email ?>">
+    <input type="hidden" name="secretValue2" value="<?PHP $verify=$_SESSION['verify']; echo $verify; ?>">
   </form>
 </body>
 
