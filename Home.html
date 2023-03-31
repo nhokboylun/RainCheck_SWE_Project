@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="./Home.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDedATs1gxl-sUVIeqFtK4oq-xQ6P8PN8s&libraries=places"></script>
 </head>
-
 <body>
-  <div class="sticky-header">
-    <img style="width: 200px" src="./Logo.png" alt="Logo" class="logo" />
-    <div class="page-title">Home</div>
-    <div class="navigation">
-      <header>
-        <div class="buttons">
-          <a style="margin-left: 5%" href="./Home.html" class="button-home">Home</a>
-          <a href="./About.html" class="button-about">About Us</a>
-          <a href="#" class="button-faq">FAQ</a>
-        </div>
-        <div class="logout">
-          <a href="#">Log Out</a>
-        </div>
-      </header>
-    </div>
-  </div>
+  <header>
+    <div class="title">RAINCHECK</div>
+    <nav>
+      <a href="#" class="nav-item">Home</a>
+      <a href="#" class="nav-item">About Us</a>
+      <a href="#" class="nav-item">FAQ</a>
+      <a href="#" class="nav-item logout">Log Out</a>
+    </nav>
+  </header>
+
   <main>
     <div class="search">
-      <form>
-        <input type="text" placeholder="Search..." />
-        <button type="submit">Search</button>
-      </form>
+      <input id="locationSearch" type="text" placeholder="Search for a location">
+      <button onclick="getCurrentLocation()">Get Current Location</button>
     </div>
+    <div id="weatherInfo"></div>
+    <div id="photo-container"></div>
   </main>
+  <script src="script.js"></script>
 </body>
-
 </html>
