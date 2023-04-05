@@ -1,3 +1,17 @@
+<?PHP 
+  session_start();
+  if(isset($_SESSION['user'])){
+    if (isset($_POST['logout'])) {
+      session_destroy();
+      header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+      exit();
+    }
+  } else {
+    session_destroy();
+    header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+    exit();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,10 +31,13 @@
     <header>
       <div class="title">RAINCHECK</div>
       <nav>
-        <a href="#" class="nav-item">Home</a>
-        <a href="#" class="nav-item">About Us</a>
+        <a href="./Home.php" class="nav-item">Home</a>
+        <a href="./About.html" class="nav-item">About Us</a>
         <a href="#" class="nav-item">FAQ</a>
-        <a href="#" class="nav-item logout">Log Out</a>
+        <!-- <a href="#" class="nav-item logout">Log Out</a> -->
+        <form method="post">
+          <input class="nav-item logout" type="submit" name="logout" value="Logout">
+        </form>
       </nav>
     </header>
 
