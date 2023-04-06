@@ -116,19 +116,6 @@ form div ion-icon {
   color: green;
 }
 
-.facebook {
-  color: #2154c2;
-}
-.google {
-  color: #c22121;
-}
-.instagram {
-  color: #d62976;
-}
-.linkedin {
-  color: #0072b1;
-}
-
 a:link,
 a:visited {
   color: #3a57e8;
