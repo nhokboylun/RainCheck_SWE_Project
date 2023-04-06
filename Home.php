@@ -29,7 +29,10 @@
   </head>
   <body>
     <header>
-      <div class="title">RAINCHECK</div>
+    <div class="title">
+      <img src="./Logo.png" alt="Logo" />
+      <span>RAINCHECK</span>
+    </div>
       <nav>
         <a href="./Home.php" class="nav-item">Home</a>
         <a href="./About.html" class="nav-item">About Us</a>
