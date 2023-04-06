@@ -1,3 +1,4 @@
+HTML:
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,26 +48,37 @@
       }
 
       function updateRequirements() {
-        const password = document.getElementsByName("pass")[0].value;
-        const requirements = {
-          length: /(?=.{8,})/,
-          lowerCase: /(?=.*[a-z])/,
-          upperCase: /(?=.*[A-Z])/,
-          number: /(?=.*\d)/,
-          specialChar: /(?=.*[!@#$%^&*])/,
-        };
+  const password = document.getElementsByName("pass")[0].value;
+  const confirmPassword = document.getElementsByName("confirmPass")[0].value;
+  const requirements = {
+    length: /(?=.{8,})/,
+    lowerCase: /(?=.*[a-z])/,
+    upperCase: /(?=.*[A-Z])/,
+    number: /(?=.*\d)/,
+    specialChar: /(?=.*[!@#$%^&*])/,
+  };
 
-        for (const key in requirements) {
-          const reqElement = document.getElementById(key);
-          if (requirements[key].test(password)) {
-            reqElement.classList.add("matched");
-            reqElement.classList.remove("not-matched");
-          } else {
-            reqElement.classList.add("not-matched");
-            reqElement.classList.remove("matched");
-          }
-        }
-      }
+  for (const key in requirements) {
+    const reqElement = document.getElementById(key);
+    if (requirements[key].test(password)) {
+      reqElement.classList.add("matched");
+      reqElement.classList.remove("not-matched");
+    } else {
+      reqElement.classList.add("not-matched");
+      reqElement.classList.remove("matched");
+    }
+  }
+
+  const confirmPasswordElement = document.getElementById("confirm-password");
+  if (password === confirmPassword) {
+    confirmPasswordElement.classList.add("matched");
+    confirmPasswordElement.classList.remove("not-matched");
+  } else {
+    confirmPasswordElement.classList.add("not-matched");
+    confirmPasswordElement.classList.remove("matched");
+  }
+}
+
 
       function formatPhoneNumber(event) {
         const phoneNumber = event.target.value.replace(/\D/g, "");
@@ -113,7 +125,7 @@
         oninput="updateRequirements()"
         required
       />
-      <input type="password" name="confirmPass" required />
+      <input type="password" name="confirmPass" oninput="updateRequirements()" required />
       <ul style="width: 218.64px" class="password-requirements">
         <li id="length" class="not-matched">8 characters minimum</li>
         <li id="upperCase" class="not-matched">One uppercase letter</li>
@@ -132,19 +144,6 @@
 
       <p><input type="checkbox" />I agree with the terms of use</p>
       <input type="submit" id="btn" value="Sign Up" name="submit" />
-      <!-- <p>or sign up with</p>
-      <div>
-        <a href="#"><ion-icon class="google" name="logo-google"></ion-icon></a>
-        <a href="#"
-          ><ion-icon class="facebook" name="logo-facebook"></ion-icon
-        ></a>
-        <a href="#">
-          <ion-icon class="instagram" name="logo-instagram"></ion-icon
-        ></a>
-        <a hr ef="#">
-          <ion-icon class="linkedin" name="logo-linkedin"></ion-icon
-        ></a>
-      </div> -->
       <p>Already have an account? <a href="./index.html">Login Here</a></p>
     </form>
   </body>

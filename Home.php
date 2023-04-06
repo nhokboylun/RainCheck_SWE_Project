@@ -1,4 +1,4 @@
-<?PHP 
+<!--<?PHP 
   session_start();
   if(isset($_SESSION['user'])){
     if (isset($_POST['logout'])) {
@@ -11,7 +11,7 @@
     header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
     exit();
   }
-?>
+?> -->
 <!DOCTYPE html>
 <html lang="en">
   <head>

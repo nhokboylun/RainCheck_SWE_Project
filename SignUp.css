@@ -78,7 +78,7 @@ form p,
 }
 
 input {
-  height: 20px;
+  height: 30px;
   margin-left: -2px;
   margin-top: -12px;
   padding: 7px;
@@ -314,3 +314,4 @@ ion-icon:hover {
     margin-bottom: 2em;
   }
 }
+
