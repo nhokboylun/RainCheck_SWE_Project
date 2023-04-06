@@ -30,14 +30,13 @@
   <body>
     <header>
     <div class="title">
-      <img src="./Logo.png" alt="Logo" />
+      <img style="width:10%;" src="./Logo.png" alt="Logo" />
       <span>RAINCHECK</span>
     </div>
       <nav>
         <a href="./Home.php" class="nav-item">Home</a>
         <a href="./About.html" class="nav-item">About Us</a>
         <a href="#" class="nav-item">FAQ</a>
-        <!-- <a href="#" class="nav-item logout">Log Out</a> -->
         <form method="post">
           <input class="nav-item logout" type="submit" name="logout" value="Logout">
         </form>

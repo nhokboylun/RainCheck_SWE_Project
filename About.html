@@ -1,48 +1,41 @@
-<html>
-
-<head>
-    <link rel="stylesheet" href="./About.css" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About</title>
-</head>
-
-<body>
-    <div class="sticky-header">
-        <img style="width: 200px;" src="Logo.png" alt="Logo" class="logo">
-        <div class="page-title">About Us</div>
-        <div class="navigation">
-            <header>
-                <div class="buttons">
-                    <a style=" margin-left: 5%;" href="./Home.php" class="button-home">Home</a>
-                    <a href="./About.html" class="button-about">About Us</a>
-                    <a href="#" class="button-faq">FAQ</a>
-                </div>
-                <div class="logout">
-                    <a href="#">Log Out</a>
-                </div>
-            </header>
-        </div>
+    <link rel="stylesheet" href="About.css" />
+  </head>
+  <body>
+    <header>
+    <div class="title">
+      <img style="width: 10%;" src="./Logo.png" alt="Logo" />
+      <span>RAINCHECK</span>
     </div>
-    <br>
+      <nav>
+        <a href="./Home.php" class="nav-item">Home</a>
+        <a href="./About.html" class="nav-item">About Us</a>
+        <a href="#" class="nav-item">FAQ</a>
+        <form method="post">
+          <input class="nav-item logout" type="submit" name="logout" value="Logout">
+        </form>
+      </nav>
+    </header>
+    
+    <h2 class="about-title">About Us</h2><br>
     <main>
-        <div class="about-content">
+        <div class="columns">
             <div class="column">
-                <p>Welcome to our weather-based activity planning app! Our app provides users with customized activity
-                    suggestions based on their location and real-time weather conditions, so you can make the most of
-                    your time no matter what the weather may be.</p>
-
-                <p>Our app integrates with Google Maps, providing users with detailed information on recommended
-                    activities and their locations. You can also customize the suggestions by applying filters to meet
-                    your specific needs and preferences.</p>
+              <p>Welcome to our weather-based activity planning app! Our app provides users with customized activity suggestions based on their location and real-time weather conditions, so you can make the most of your time no matter what the weather may be.</p>
+              <p>Our app integrates with Google Maps, providing users with detailed information on recommended activities and their locations. You can also customize the suggestions by applying filters to meet your specific needs and preferences.</p>
             </div>
             <div class="column">
-                <p>Our goal is to enhance your life by providing a convenient tool to help you make informed decisions
-                    about your daily activities, while also keeping you safe from potential weather-related hazards.</p>
-
-                <p>Thank you for choosing our app. We're confident that it will help you make the most of every day, no
-                    matter what the weather may bring.</p>
+              <p>Our goal is to enhance your life by providing a convenient tool to help you make informed decisions about your daily activities, while also keeping you safe from potential weather-related hazards.</p>
+              <p>Thank you for choosing our app. We're confident that it will help you make the most of every day, no matter what the weather may bring.</p>
             </div>
-        </div>
-    </main>
-</body>
+          </div>
+          
+      </main>      
 
+  </body>
 </html>
