@@ -1,7 +1,7 @@
 const locationSearch = document.getElementById("locationSearch");
 const weatherInfo = document.getElementById("weatherInfo");
 
-const apierKey = "6e7bc156ddf0165f9cea962f15c3ead2";
+const apiKey = "6e7bc156ddf0165f9cea962f15c3ead2";
 
 function initAutocomplete() {
   const autocomplete = new google.maps.places.Autocomplete(locationSearch);
