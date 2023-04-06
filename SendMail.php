@@ -7,11 +7,17 @@
     require 'phpmailer/src/PHPMailer.php';
     require 'phpmailer/src/SMTP.php';
 
+    $firstChar = substr($Tran, 0, 1);
+
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = "raincheckswe@gmail.com"; 
+    if ($firstChar === "w"){
+      $mail->Username = "raincheckswe@gmail.com";
+    } else {
+      $mail->Username = "raincheckswe2023@gmail.com";
+    } 
     $mail->Password = $Tran;
 
     $mail->SMTPSecure = 'ssl';

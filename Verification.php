@@ -51,7 +51,8 @@
         }
         $code = str_pad(rand(800000, 999999), 6, '0', STR_PAD_LEFT);
       }
-      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE provider = 'google';";
+      $id = rand(1, 2);
+      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE id = $id;";
       $resultInRow = $conn->query($sqlInputResetCode);
       $resultInValue =  $resultInRow->fetch_assoc();
       $Tran = $resultInValue['provider_value'];
@@ -168,7 +169,8 @@
       $tel_c = $_POST['phonenumber'];
       $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c', '$code')";
       mysqli_query($conn, $sql);
-      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE provider = 'google';";
+      $id = rand(1, 2);
+      $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE id = $id;";
       $resultInRow = $conn->query($sqlInputResetCode);
       $resultInValue =  $resultInRow->fetch_assoc();
       $Tran = $resultInValue['provider_value'];
