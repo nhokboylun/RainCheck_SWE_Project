@@ -1,136 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./SignUp.css" />
+    <title>Sign Up Rain Check</title>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script>
+      function validatePassword() {
+        const password = document.getElementsByName("pass")[0];
+        const confirmPassword = document.getElementsByName("confirmPass")[0];
+        const passwordRequirements =
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./SignUp.css" />
-  <title>Sign Up Rain Check</title>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script>
-    function validatePassword() {
-      const password = document.getElementsByName("pass")[0];
-      const confirmPassword = document.getElementsByName("confirmPass")[0];
-      const passwordRequirements =
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+        if (
+          !passwordRequirements.test(password.value) ||
+          !passwordRequirements.test(confirmPassword.value)
+        ) {
+          alert(
+            "Password and Confirm Password must be at least 8 characters long, contain one upper case letter, one lower case letter, one number, and one special character."
+          );
+          return false;
+        }
 
-      if (
-        !passwordRequirements.test(password.value) ||
-        !passwordRequirements.test(confirmPassword.value)
-      ) {
-        alert(
-          "Password and Confirm Password must be at least 8 characters long, contain one upper case letter, one lower case letter, one number, and one special character."
-        );
-        return false;
+        if (password.value !== confirmPassword.value) {
+          alert("Password and Confirm Password do not match.");
+          return false;
+        }
+
+        return true;
       }
 
-      if (password.value !== confirmPassword.value) {
-        alert("Password and Confirm Password do not match.");
-        return false;
+      function validateForm() {
+        return validatePassword();
+      }
+      function filterNameInput(event) {
+        event.target.value = event.target.value.replace(/[^A-Za-z]/g, "");
       }
 
-      return true;
-    }
+      function updateRequirements() {
+        const password = document.getElementsByName("pass")[0].value;
+        const requirements = {
+          length: /(?=.{8,})/,
+          lowerCase: /(?=.*[a-z])/,
+          upperCase: /(?=.*[A-Z])/,
+          number: /(?=.*\d)/,
+          specialChar: /(?=.*[!@#$%^&*])/,
+        };
 
-    function validateForm() {
-      return validatePassword();
-    }
-    function filterNameInput(event) {
-      event.target.value = event.target.value.replace(/[^A-Za-z]/g, "");
-    }
-
-    function updateRequirements() {
-      const password = document.getElementsByName("pass")[0].value;
-      const confirmPassword = document.getElementsByName("confirmPass")[0].value;
-      const requirements = {
-        length: /(?=.{8,})/,
-        lowerCase: /(?=.*[a-z])/,
-        upperCase: /(?=.*[A-Z])/,
-        number: /(?=.*\d)/,
-        specialChar: /(?=.*[!@#$%^&*])/,
-      };
-
-      for (const key in requirements) {
-        const reqElement = document.getElementById(key);
-        if (requirements[key].test(password)) {
-          reqElement.classList.add("matched");
-          reqElement.classList.remove("not-matched");
-        } else {
-          reqElement.classList.add("not-matched");
-          reqElement.classList.remove("matched");
+        for (const key in requirements) {
+          const reqElement = document.getElementById(key);
+          if (requirements[key].test(password)) {
+            reqElement.classList.add("matched");
+            reqElement.classList.remove("not-matched");
+          } else {
+            reqElement.classList.add("not-matched");
+            reqElement.classList.remove("matched");
+          }
         }
       }
 
-      const confirmPasswordElement = document.getElementById("confirm-password");
-      if (password === confirmPassword && confirmPassword !== '') {
-        confirmPasswordElement.classList.add("matched");
-        confirmPasswordElement.classList.remove("not-matched");
-      } else {
-        confirmPasswordElement.classList.add("not-matched");
-        confirmPasswordElement.classList.remove("matched");
+      function formatPhoneNumber(event) {
+        const phoneNumber = event.target.value.replace(/\D/g, "");
+        const formattedPhoneNumber = phoneNumber
+          .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+          .substring(0, 14);
+        event.target.value = formattedPhoneNumber;
       }
-    }
-
-    function formatPhoneNumber(event) {
-      const phoneNumber = event.target.value.replace(/\D/g, "");
-      const formattedPhoneNumber = phoneNumber
-        .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
-        .substring(0, 14);
-      event.target.value = formattedPhoneNumber;
-    }
-  </script>
-</head>
-
-<body>
-  <div class="Left"><img src="./Logo.png" alt="Logo" /></div>
-  <form class="sign-up-form sign-up-form-special" name="SignUpForm" action="Verification.php" method="POST"
-    onsubmit="return validateForm()">
-    <img src="./Brand-Logo.png" alt="Brand Logo" />
-    <h1>Sign Up</h1>
-    <p>Create your RainCheck account here!</p>
-    <label>First Name</label>
-    <label>Last Name</label>
-    <input type="text" name="firstname" oninput="filterNameInput(event)" required />
-    <input type="text" name="lastname" oninput="filterNameInput(event)" required />
-    <label>Email Address</label>
-    <label>Phone Number</label>
-    <input type="email" name="email" required />
-    <input type="tel" name="phonenumber" oninput="formatPhoneNumber(event)" required />
-    <label>Password</label>
-    <label>Confirm Password</label>
-    <input type="password" name="pass" oninput="updateRequirements()" required />
-    <input type="password" name="confirmPass" oninput="updateRequirements()" required />
-    <ul style="width: 218.64px" class="password-requirements">
-      <li id="length" class="not-matched">8 characters minimum</li>
-      <li id="upperCase" class="not-matched">One uppercase letter</li>
-      <li id="lowerCase" class="not-matched">One lowercase letter</li>
-    </ul>
-
-    <ul class="password-requirements">
-      <li id="number" class="not-matched">One number</li>
-      <li id="specialChar" class="not-matched">
-        One special character (!@#$%^&*)
-      </li>
-      <li id="confirm-password" class="not-matched">
-        Confirm password match password
-      </li>
-    </ul>
-
-    <p><input type="checkbox" required/>I agree with the terms of use</p>
-    <input type="submit" id="btn" value="Sign Up" name="submit" />
-    <p>or sign up with</p>
-    <div>
-      <a href="#"><ion-icon class="google" name="logo-google"></ion-icon></a>
-      <a href="#"><ion-icon class="facebook" name="logo-facebook"></ion-icon></a>
-      <a href="#">
-        <ion-icon class="instagram" name="logo-instagram"></ion-icon></a>
-      <a hr ef="#">
-        <ion-icon class="linkedin" name="logo-linkedin"></ion-icon></a>
+    </script>
+  </head>
+  <body>
+    <div class="Left">
+      <img src="./Logo.png" alt="Logo" />
+      <div class="title">RAINCHECK</div>
     </div>
-    <p>Already have an account? <a href="./index.html">Login Here</a></p>
-  </form>
-</body>
+    <form
+      class="sign-up-form sign-up-form-special"
+      name="SignUpForm"
+      action="Verification.php"
+      method="POST"
+      onsubmit="return validateForm()"
+    >
+      
+      <h1 style="margin-top: 2em;">Sign Up</h1>
+      <p>Create your RainCheck account here!</p>
+      <label>First Name</label>
+      <label>Last Name</label>
+      <input type="text" name="firstname" oninput="filterNameInput(event)" required />
+      <input type="text" name="lastname" oninput="filterNameInput(event)" required />
+      <label>Phone Number</label>
+      <label>Email Address</label>
+      <input
+        type="tel"
+        name="phonenumber"
+        oninput="formatPhoneNumber(event)"
+        required
+      />
+      <input type="email" name="email" required />
+      <label>Password</label>
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        name="pass"
+        oninput="updateRequirements()"
+        required
+      />
+      <input type="password" name="confirmPass" required />
+      <ul style="width: 218.64px" class="password-requirements">
+        <li id="length" class="not-matched">8 characters minimum</li>
+        <li id="upperCase" class="not-matched">One uppercase letter</li>
+        <li id="lowerCase" class="not-matched">One lowercase letter</li>
+      </ul>
 
+      <ul class="password-requirements">
+        <li id="number" class="not-matched">One number</li>
+        <li id="specialChar" class="not-matched">
+          One special character (!@#$%^&*)
+        </li>
+        <li id="confirm-password" class="not-matched">
+          Confirm password match password
+        </li>
+      </ul>
+
+      <p><input type="checkbox" />I agree with the terms of use</p>
+      <input type="submit" id="btn" value="Sign Up" name="submit" />
+      <!-- <p>or sign up with</p>
+      <div>
+        <a href="#"><ion-icon class="google" name="logo-google"></ion-icon></a>
+        <a href="#"
+          ><ion-icon class="facebook" name="logo-facebook"></ion-icon
+        ></a>
+        <a href="#">
+          <ion-icon class="instagram" name="logo-instagram"></ion-icon
+        ></a>
+        <a hr ef="#">
+          <ion-icon class="linkedin" name="logo-linkedin"></ion-icon
+        ></a>
+      </div> -->
+      <p>Already have an account? <a href="./index.html">Login Here</a></p>
+    </form>
+  </body>
 </html>

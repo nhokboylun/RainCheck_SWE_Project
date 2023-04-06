@@ -2,23 +2,40 @@ body {
   font-family: "Roboto", sans-serif;
   display: grid;
   grid-template-columns: 40fr 60fr;
+  grid-template-rows: 1fr;
   margin: auto;
-  background-image: linear-gradient(to right,
-      #484a4e 0%,
-      #484a4e 40%,
-      #ffce00 40%,
-      #ffce00 100%);
+  background-image: linear-gradient(
+    to right,
+    #484a4e 0%,
+    #484a4e 40%,
+    #ffce00 40%,
+    #ffce00 100%
+  );
+}
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Left Part */
-
 .Left {
+  grid-row: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  background-color: #484a4e;
+  height: auto;
+}
+
+form {
+  grid-row: 1;
 }
 
 .Left img {
-  max-width: 400px;
+  width: 80%;
   margin: auto 0;
 }
 
@@ -102,15 +119,12 @@ form div ion-icon {
 .facebook {
   color: #2154c2;
 }
-
 .google {
   color: #c22121;
 }
-
 .instagram {
   color: #d62976;
 }
-
 .linkedin {
   color: #0072b1;
 }
@@ -155,4 +169,161 @@ ion-icon:hover {
 .ResetPassword #btn {
   width: 53%;
   height: 50px;
+}
+
+/* Media Queries */
+@media (min-width: 1201px) {
+  form {
+    padding-top: 5em;
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 1200px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    background-image: linear-gradient(
+      to bottom,
+      #ffce00 0%, 
+      #ffce00 100%
+    );
+  }
+
+  .Left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  form {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .Left img {
+    width: 20%;
+  }
+
+  form img {
+    width: 300px;
+    height: 75px;
+  }
+
+  .sign-up-form {
+    width: 90%;
+  }
+  form img {
+    width: 250px;
+    height: 62.5px;
+  }
+
+  .sign-up-form {
+    width: 80%;
+  }
+
+  input {
+    height: 20px;
+    margin-left: -2px;
+    margin-top: -12px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+  form div,
+  form img,
+  form h1,
+  form p,
+  #btn {
+    grid-column: 1/-1;
+    margin: 0 auto;
+  }
+
+  #btn {
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  form div {
+    display: flex;
+    width: 200px;
+    justify-content: space-around;
+    margin-bottom: 2em;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    background-image: linear-gradient(
+      to bottom,
+      #ffce00 0%, 
+      #ffce00 100%
+    );
+  }
+
+
+  .Left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  form {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .Left img {
+    width: 20%;
+  }
+
+  form img {
+    width: 200px;
+    height: 50px;
+  }
+
+  .sign-up-form {
+    width: 100%;
+  }
+  form img {
+    width: 150px;
+    height: 37.5px;
+  }
+
+  .sign-up-form {
+    width: 90%;
+  }
+
+  input {
+    height: 20px;
+    margin-left: -2px;
+    margin-top: -12px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+  form div,
+  form img,
+  form h1,
+  form p,
+  #btn {
+    grid-column: 1/-1;
+    margin: 0 auto;
+  }
+
+  #btn {
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  form div {
+    display: flex;
+    width: 150px;
+    justify-content: space-around;
+    margin-bottom: 2em;
+  }
 }
