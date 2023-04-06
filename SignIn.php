@@ -19,7 +19,9 @@
     ob_end_flush();
     mysqli_close($conn);
     if ($result->num_rows === 1 && strcmp($password_c,$db_password) == 0){
-      header("Location: https://melvin-projects.com/RainCheck_SWE_Project/Home.html");
+      session_start();
+      $_SESSION['user'] = $username_c;
+      header("Location: https://melvin-projects.com/RainCheck_SWE_Project/Home.php");
       exit();
     } 
     echo "<script>alert('Either username or password or both is incorrect. Or email is not activate. Please try again!')</script>";
@@ -29,3 +31,4 @@
     header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
     exit();
   }
+?>
