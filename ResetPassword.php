@@ -21,11 +21,11 @@ if (isset($_POST['submitFromResetPassword'])) {
   ob_end_flush();
   mysqli_close($conn);
   session_destroy();
-  header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+  header("Location: https://melvin-projects.com/RainCheck/index.html");
   exit();
 }
 if (!isset($_SESSION['email'])){
-  header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+  header("Location: https://melvin-projects.com/RainCheck/index.html");
 }
 ?>
 <!DOCTYPE html>
@@ -105,7 +105,6 @@ if (!isset($_SESSION['email'])){
 <body class="ResetPasswordPage">
   <div class="Left"><img src="./Logo.png" alt="Logo" /></div>
   <form class="sign-up-form ResetPassword" action="ResetPassword.php" name="ResetPassword" method="POST" onsubmit="return validateForm()">
-    <img src="./Brand-Logo.png" alt="Brand Logo" />
     <h1>Reset Password</h1>
     <input type="password" name="pass" placeholder="New Password" oninput="updateRequirements()" required />
     <ul style="width: 218.64px" class="password-requirements">

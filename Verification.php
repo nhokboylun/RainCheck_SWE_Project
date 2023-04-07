@@ -3,7 +3,7 @@
 
 <head>
   <title>Verification</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="./Verification.css" />
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script>
@@ -40,7 +40,7 @@
         mysqli_close($conn);
         echo "<script>alert('The email address you input is not registered yet. Please Try Again!')</script>";
         echo "<p>You are being redirected to the previous page.</p>";
-        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck_SWE_Project/ForgotPassword.html'>";
+        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck/ForgotPassword.html'>";
       }
       $code = str_pad(rand(800000, 999999), 6, '0', STR_PAD_LEFT);
       while (true) {
@@ -74,7 +74,7 @@
           $conn->query($sqlDelete);
           ob_end_flush();
           mysqli_close($conn);
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+          header("Location: https://melvin-projects.com/RainCheck/index.html");
           exit();
         } else if ($verify >= 800000) {
           $sql = "SELECT email FROM Users WHERE Code = $verify";
@@ -86,7 +86,7 @@
           session_start();
           $_SESSION['email']=$email;
           $_SESSION['verify']=$verify*2;
-          header("Location: https://melvin-projects.com/RainCheck_SWE_Project/ResetPassword.php");
+          header("Location: https://melvin-projects.com/RainCheck/ResetPassword.php");
           exit();
         }
       } else {
@@ -95,12 +95,11 @@
           echo '
           <div class="container">
           <div class="login-container Verification-container">
-            <img src="./Brand-Logo.png" alt="Placeholder Image" />
             <h1>Failed !</h1>
             <p>
               You put the wrong code. Please hit the link below to Sign Up again.
             </p>
-            <a href=https://melvin-projects.com/RainCheck_SWE_Project/SignUp.html>Sign Up</a>
+            <a href=https://melvin-projects.com/RainCheck/SignUp.html>Sign Up</a>
           </div>
           <div class="image-container">
             <img src="./Logo.png" alt="Placeholder Image" />
@@ -118,12 +117,11 @@
           echo '
           <div class="container">
           <div class="login-container Verification-container">
-            <img src="./Brand-Logo.png" alt="Placeholder Image" />
             <h1>Failed !</h1>
             <p>
               You put the wrong code. Please hit the link below so you can start over.
             </p>
-            <a href=https://melvin-projects.com/RainCheck_SWE_Project/ForgotPassword.html>Start Over</a>
+            <a href=https://melvin-projects.com/RainCheck/ForgotPassword.html>Start Over</a>
           </div>
           <div class="image-container">
             <img src="./Logo.png" alt="Placeholder Image" />
@@ -152,7 +150,7 @@
         mysqli_close($conn);
         echo "<script>alert('The email address you input is already registered. Please use another email!')</script>";
         echo "<p>You are being redirected to the previous page.</p>";
-        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck_SWE_Project/SignUp.html'>";
+        echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck/SignUp.html'>";
       }
       $code = str_pad(rand(1, 799999), 6, '0', STR_PAD_LEFT);
       while (true) {
@@ -179,12 +177,11 @@
     ob_end_flush();
     mysqli_close($conn);
   } else {
-    header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+    header("Location: https://melvin-projects.com/RainCheck/index.html");
   }
   ?>
   <div class="container">
     <div class="login-container Verification-container">
-      <img src="./Brand-Logo.png" alt="Placeholder Image" />
       <ion-icon name="checkmark-circle-outline"></ion-icon>
       <h1>Success !</h1>
       <p>

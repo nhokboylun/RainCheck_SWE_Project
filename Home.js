@@ -1,8 +1,6 @@
 const locationSearch = document.getElementById("locationSearch");
 const weatherInfo = document.getElementById("weatherInfo");
 
-const apiKey = "6e7bc156ddf0165f9cea962f15c3ead2";
-
 function initAutocomplete() {
   const autocomplete = new google.maps.places.Autocomplete(locationSearch);
 
@@ -20,7 +18,7 @@ async function getWeather(lat, lon) {
   searchActivities(lat, lon);
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+      `proxy.php?endpoint=weather&lat=${lat}&lon=${lon}&units=imperial`
     );
 
     if (!response.ok) {
@@ -80,16 +78,15 @@ function searchActivities(latitude, longitude) {
   function processResults(results, status, pagination) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       const photoContainer = document.getElementById("photo-container");
-      for (let i = 0; i < 10; i++) {
-        console.log(`Name: ${results[i].name}`);
-        console.log(`Address: ${results[i].vicinity}`);
-        console.log(`Rating: ${results[i].rating}`);
-        console.log(`Rating Total: ${results[i].user_ratings_total}`);
-        console.log(`Type: ${results[i].types}`);
-        const rating = document.createElement("p");
-        rating.textContent = `Rating: ${results[i].rating}`;
-        rating.style.margin = "10px";
-        photoContainer.appendChild(rating);
+      for (let i = 0; i < 5; i++) {
+        const rating = document.createElement("div");
+        rating.innerHTML = `
+        <p>Name: ${results[i].name}</p>
+        <p>Address: ${results[i].vicinity}</p>
+        <p>Rating: ${results[i].rating}</p>
+        <p>Rating Total: ${results[i].user_ratings_total}</p>
+        <p>Type: ${results[i].types}</p>
+        `;
         const photoUrl = results[i].photos[0].getUrl();
         const img = document.createElement("img");
         img.src = photoUrl;
@@ -98,6 +95,7 @@ function searchActivities(latitude, longitude) {
         img.style.height = "200px";
         img.style.margin = "10px";
         photoContainer.appendChild(img);
+        photoContainer.appendChild(rating);
       }
     } else {
       console.error("Error: " + status);
@@ -105,7 +103,7 @@ function searchActivities(latitude, longitude) {
   }
 
   service.nearbySearch(request, processResults);
-  service.nearbySearch(request1, processResults);
+  //service.nearbySearch(request1, processResults);
 }
 
 // Call getCurrentLocation() to request the user's location upon loading the page

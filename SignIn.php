@@ -21,14 +21,14 @@
     if ($result->num_rows === 1 && strcmp($password_c,$db_password) == 0){
       session_start();
       $_SESSION['user'] = $username_c;
-      header("Location: https://melvin-projects.com/RainCheck_SWE_Project/Home.php");
+      header("Location: ./Home.php");
       exit();
     } 
     echo "<script>alert('Either username or password or both is incorrect. Or email is not activate. Please try again!')</script>";
     echo "<p>You are being redirected to the login page.</p>";
-    echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck_SWE_Project/index.html'>";
+    echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck/index.html'>";
   } else {
-    header("Location: https://melvin-projects.com/RainCheck_SWE_Project/index.html");
+    header("Location: https://melvin-projects.com/RainCheck/index.html");
     exit();
   }
 ?>

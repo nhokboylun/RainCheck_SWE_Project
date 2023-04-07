@@ -1,0 +1,142 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    to right,
+    #ffce00 0%,
+    #ffce00 50%,
+    #484a4e 50%,
+    #484a4e 100%
+  );
+  font-size: 16px;
+  color: #353030;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+  background-color: #ffce00;
+  gap: 20px;
+}
+
+.login-container img {
+  margin: 0 auto;
+  padding-right: 20px;
+  width: 280px;
+  height: 70px;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.need-fix {
+  display: grid;
+  grid-template-columns: 82fr 40fr;
+  width: 400px;
+  row-gap: 7px;
+}
+
+.need-fix p {
+  margin: 7px 0 14px 0;
+}
+
+.need-fix label {
+  grid-column: 1/-1;
+  margin-left: 2px;
+  margin-bottom: -4px;
+}
+
+.login-container input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  grid-column: 1/-1;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  width: 200px;
+  font-weight: 500;
+  font-size: 20px;
+  background-color: #3a57e8;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #353030;
+}
+
+.submitBtnSignIn {
+  grid-column: 1/-1;
+  margin: 0 auto;
+}
+
+ion-icon:hover {
+  color: #353030;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 400px;
+  margin: auto;
+}
+
+a:link,
+a:visited {
+  color: #3a57e8;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  color: #353030;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* CSS for Verification.php */
+
+.Verification-container p {
+  width: 60%;
+  font-weight: 600;
+  text-align: center;
+}
+
+.Verification-container ion-icon {
+  color: #2154c2;
+  margin: 0;
+  width: 150px;
+  height: 100px;
+}
+
+.Verification-container form {
+  row-gap: 20px;
+}
+
+.Verification-container h1 {
+  margin: 0;
+  font-size: 58px;
+  color: #2154c2;
+}
