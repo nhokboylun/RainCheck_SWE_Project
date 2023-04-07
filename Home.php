@@ -1,16 +1,16 @@
 <?PHP 
-  session_start();
-  if(isset($_SESSION['user'])){
-    if (isset($_POST['logout'])) {
-      session_destroy();
-      header("Location: https://melvin-projects.com/RainCheck/index.html");
-      exit();
-    }
-  } else {
-    session_destroy();
-    header("Location: https://melvin-projects.com/RainCheck/index.html");
-    exit();
-  }
+  // session_start();
+  // if(isset($_SESSION['user'])){
+  //   if (isset($_POST['logout'])) {
+  //     session_destroy();
+  //     header("Location: https://melvin-projects.com/RainCheck/index.html");
+  //     exit();
+  //   }
+  // } else {
+  //   session_destroy();
+  //   header("Location: https://melvin-projects.com/RainCheck/index.html");
+  //   exit();
+  // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
