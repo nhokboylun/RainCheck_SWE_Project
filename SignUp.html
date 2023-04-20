@@ -14,14 +14,7 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-      function encryptPassword(password) {
-        const secretKey = 'your-secret-key'; // Replace this with your own secret key
-        const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey);
-        return encryptedPassword.toString();
-      }
-
       function validatePassword() {
         const password = document.getElementsByName("pass")[0];
         const confirmPassword = document.getElementsByName("confirmPass")[0];
@@ -47,23 +40,16 @@
       }
 
       function validateForm() {
-        if (validatePassword()) {
-          const passwordField = document.getElementsByName('pass')[0];
-          const confirmPasswordField = document.getElementsByName('confirmPass')[0];
-          passwordField.value = encryptPassword(passwordField.value);
-          confirmPasswordField.value = encryptPassword(confirmPasswordField.value);
-          return true;
-        }
-        return false;
+        return validatePassword();
       }
-
       function filterNameInput(event) {
         event.target.value = event.target.value.replace(/[^A-Za-z]/g, "");
       }
 
       function updateRequirements() {
         const password = document.getElementsByName("pass")[0].value;
-        const confirmPassword = document.getElementsByName("confirmPass")[0].value;
+        const confirmPassword =
+          document.getElementsByName("confirmPass")[0].value;
         const requirements = {
           length: /(?=.{8,})/,
           lowerCase: /(?=.*[a-z])/,
@@ -83,7 +69,8 @@
           }
         }
 
-        const confirmPasswordElement = document.getElementById("confirm-password");
+        const confirmPasswordElement =
+          document.getElementById("confirm-password");
         if (password === confirmPassword) {
           confirmPasswordElement.classList.add("matched");
           confirmPasswordElement.classList.remove("not-matched");
@@ -114,13 +101,22 @@
       method="POST"
       onsubmit="return validateForm()"
     >
-      
-      <h1 style="margin-top: 2em;">Sign Up</h1>
+      <h1 style="margin-top: 2em">Sign Up</h1>
       <p>Create your RainCheck account here!</p>
       <label>First Name</label>
       <label>Last Name</label>
-      <input type="text" name="firstname" oninput="filterNameInput(event)" required />
-      <input type="text" name="lastname" oninput="filterNameInput(event)" required />
+      <input
+        type="text"
+        name="firstname"
+        oninput="filterNameInput(event)"
+        required
+      />
+      <input
+        type="text"
+        name="lastname"
+        oninput="filterNameInput(event)"
+        required
+      />
       <label>Phone Number</label>
       <label>Email Address</label>
       <input
@@ -138,7 +134,12 @@
         oninput="updateRequirements()"
         required
       />
-      <input type="password" name="confirmPass" oninput="updateRequirements()" required />
+      <input
+        type="password"
+        name="confirmPass"
+        oninput="updateRequirements()"
+        required
+      />
       <ul style="width: 218.64px" class="password-requirements">
         <li id="length" class="not-matched">8 characters minimum</li>
         <li id="upperCase" class="not-matched">One uppercase letter</li>
