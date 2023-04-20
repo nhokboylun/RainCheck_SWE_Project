@@ -36,7 +36,7 @@ exit();
       <nav>
         <a href="./Home.php" class="nav-item">Home</a>
         <a href="./About.html" class="nav-item">About Us</a>
-        <a href="#" class="nav-item">FAQ</a>
+        <a href="./faq.html" class="nav-item">FAQ</a>
         <form method="post">
           <input
             class="nav-item logout"
