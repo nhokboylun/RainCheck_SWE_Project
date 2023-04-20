@@ -14,7 +14,14 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+      function encryptPassword(password) {
+        const secretKey = 'your-secret-key'; // Replace this with your own secret key
+        const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey);
+        return encryptedPassword.toString();
+      }
+
       function validatePassword() {
         const password = document.getElementsByName("pass")[0];
         const confirmPassword = document.getElementsByName("confirmPass")[0];
@@ -40,44 +47,51 @@
       }
 
       function validateForm() {
-        return validatePassword();
+        if (validatePassword()) {
+          const passwordField = document.getElementsByName('pass')[0];
+          const confirmPasswordField = document.getElementsByName('confirmPass')[0];
+          passwordField.value = encryptPassword(passwordField.value);
+          confirmPasswordField.value = encryptPassword(confirmPasswordField.value);
+          return true;
+        }
+        return false;
       }
+
       function filterNameInput(event) {
         event.target.value = event.target.value.replace(/[^A-Za-z]/g, "");
       }
 
       function updateRequirements() {
-  const password = document.getElementsByName("pass")[0].value;
-  const confirmPassword = document.getElementsByName("confirmPass")[0].value;
-  const requirements = {
-    length: /(?=.{8,})/,
-    lowerCase: /(?=.*[a-z])/,
-    upperCase: /(?=.*[A-Z])/,
-    number: /(?=.*\d)/,
-    specialChar: /(?=.*[!@#$%^&*])/,
-  };
+        const password = document.getElementsByName("pass")[0].value;
+        const confirmPassword = document.getElementsByName("confirmPass")[0].value;
+        const requirements = {
+          length: /(?=.{8,})/,
+          lowerCase: /(?=.*[a-z])/,
+          upperCase: /(?=.*[A-Z])/,
+          number: /(?=.*\d)/,
+          specialChar: /(?=.*[!@#$%^&*])/,
+        };
 
-  for (const key in requirements) {
-    const reqElement = document.getElementById(key);
-    if (requirements[key].test(password)) {
-      reqElement.classList.add("matched");
-      reqElement.classList.remove("not-matched");
-    } else {
-      reqElement.classList.add("not-matched");
-      reqElement.classList.remove("matched");
-    }
-  }
+        for (const key in requirements) {
+          const reqElement = document.getElementById(key);
+          if (requirements[key].test(password)) {
+            reqElement.classList.add("matched");
+            reqElement.classList.remove("not-matched");
+          } else {
+            reqElement.classList.add("not-matched");
+            reqElement.classList.remove("matched");
+          }
+        }
 
-  const confirmPasswordElement = document.getElementById("confirm-password");
-  if (password === confirmPassword) {
-    confirmPasswordElement.classList.add("matched");
-    confirmPasswordElement.classList.remove("not-matched");
-  } else {
-    confirmPasswordElement.classList.add("not-matched");
-    confirmPasswordElement.classList.remove("matched");
-  }
-}
-
+        const confirmPasswordElement = document.getElementById("confirm-password");
+        if (password === confirmPassword) {
+          confirmPasswordElement.classList.add("matched");
+          confirmPasswordElement.classList.remove("not-matched");
+        } else {
+          confirmPasswordElement.classList.add("not-matched");
+          confirmPasswordElement.classList.remove("matched");
+        }
+      }
 
       function formatPhoneNumber(event) {
         const phoneNumber = event.target.value.replace(/\D/g, "");
