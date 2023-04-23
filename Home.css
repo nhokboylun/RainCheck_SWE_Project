@@ -23,7 +23,10 @@ header {
 
 #photo-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  column-gap: 1%;
+  row-gap: 15px;
 }
 
 .title {
@@ -60,6 +63,7 @@ main {
   align-items: center;
   padding: 2rem;
   min-height: calc(100% - 4rem);
+  row-gap: 32px;
 }
 
 .search input[type="text"] {
@@ -88,18 +92,122 @@ main {
 }
 
 #weatherInfo {
-  margin-top: 2rem;
   font-size: 1.5rem;
   color: #484a4e;
 }
 
-@media screen and (max-width: 600px) {
-  .nav-item {
-    padding: 0.5em;
-    font-size: 14px;
-  }
+/* style card */
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  row-gap: 15px;
+  column-gap: 15px;
+}
 
-  .search input[type="text"] {
-    width: 100%;
-  }
+.place-card {
+  background-color: white;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+  border-radius: 11px;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+
+.business-info {
+  text-align: center;
+}
+
+.directions-button {
+  margin: 0 auto;
+  background-color: transparent;
+  border: none;
+  color: blue;
+  text-align: center;
+  text-decoration: none;
+  font-size: 45px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease-in-out;
+}
+
+.directions-button:hover {
+  color: #ffce00;
+}
+
+.type-tag {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px;
+  width: 500px;
+  transform: translateX(-50%);
+  margin-top: 3px;
+}
+
+.dropdown-content h3 {
+  text-align: center;
+}
+
+.dropdown-content h3:first-child {
+  border-right: 1px solid #ccc;
+}
+
+.hidden {
+  display: none;
+}
+
+.dropdown-content label {
+  color: black;
+  padding: 12px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px;
+  width: 500px;
+  transform: translateX(-50%);
+  margin-top: 3px;
+}
+
+.dropdown:hover .filter-btn {
+  background-color: #3e8e41;
+}
+
+.indoor-categories,
+.outdoor-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.indoor-categories {
+  border-right: 1px solid #ccc;
+}
+
+.filter-separator {
+  border: none;
+  margin: 8px 0;
 }

@@ -1,3 +1,8 @@
+// Call getCurrentLocation() to request the user's location upon loading the page
+getCurrentLocation();
+
+let combineResults = [];
+const defaultPhotoUrl = "./Logo.png";
 const locationSearch = document.getElementById("locationSearch");
 const weatherInfo = document.getElementById("weatherInfo");
 
@@ -15,8 +20,8 @@ function initAutocomplete() {
 }
 
 async function getWeather(lat, lon) {
-  searchActivities(lat, lon);
   try {
+    document.getElementById("photo-container").innerHTML = "";
     const response = await fetch(
       `proxy.php?endpoint=weather&lat=${lat}&lon=${lon}&units=imperial`
     );
@@ -26,7 +31,30 @@ async function getWeather(lat, lon) {
     }
 
     const data = await response.json();
+
+    // Move this block inside the try block and after fetching weather data
+    if (data.main.temp > 70) {
+      const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
+      outdoorCheckboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+      });
+    } else {
+      const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
+      indoorCheckboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+      });
+    }
+
+    const checkedActivities = document.querySelectorAll(
+      ".activity-checkbox:checked"
+    );
+    const activityTypes = Array.from(checkedActivities).map(
+      (checkbox) => checkbox.value
+    );
+
     displayWeather(data);
+    await searchActivities(lat, lon, activityTypes);
+    displayCombineResults();
   } catch (error) {
     alert(`Error: ${error.message}`);
   }
@@ -57,54 +85,213 @@ function getCurrentLocation() {
 
 initAutocomplete();
 
-function searchActivities(latitude, longitude) {
-  const location = new google.maps.LatLng(latitude, longitude);
-  const map = new google.maps.Map(document.createElement("div"));
+function searchActivities(latitude, longitude, activityTypes) {
+  return new Promise((resolve) => {
+    const location = new google.maps.LatLng(latitude, longitude);
+    const map = new google.maps.Map(document.createElement("div"));
+    const service = new google.maps.places.PlacesService(map);
 
-  const request = {
-    location: location,
-    radius: "5000",
-    type: "restaurant",
-  };
+    // Create an array to store promises
+    const searchPromises = [];
 
-  const request1 = {
-    location: location,
-    radius: "50000",
-    type: "spa",
-  };
+    activityTypes.forEach((activityType) => {
+      const request = {
+        location: location,
+        radius: "5000", // 2.5 miles
+        type: activityType,
+      };
 
-  const service = new google.maps.places.PlacesService(map);
+      // Create a new Promise for each nearbySearch and push it into the array
+      const searchPromise = new Promise((searchResolve) => {
+        service.nearbySearch(request, (results, status) => {
+          processResults(results, status, request.type);
+          searchResolve();
+        });
+      });
+      searchPromises.push(searchPromise);
+    });
 
-  function processResults(results, status, pagination) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      const photoContainer = document.getElementById("photo-container");
-      for (let i = 0; i < 5; i++) {
-        const rating = document.createElement("div");
-        rating.innerHTML = `
-        <p>Name: ${results[i].name}</p>
-        <p>Address: ${results[i].vicinity}</p>
-        <p>Rating: ${results[i].rating}</p>
-        <p>Rating Total: ${results[i].user_ratings_total}</p>
-        <p>Type: ${results[i].types}</p>
-        `;
-        const photoUrl = results[i].photos[0].getUrl();
-        const img = document.createElement("img");
-        img.src = photoUrl;
-        img.alt = results[i].name;
-        img.style.width = "200px";
-        img.style.height = "200px";
-        img.style.margin = "10px";
-        photoContainer.appendChild(img);
-        photoContainer.appendChild(rating);
-      }
-    } else {
-      console.error("Error: " + status);
+    // Create an async function to wait for all Promises in the array to resolve
+    async function waitForAllSearches() {
+      await Promise.all(searchPromises);
+      resolve();
     }
-  }
 
-  service.nearbySearch(request, processResults);
-  //service.nearbySearch(request1, processResults);
+    // Invoke the async function
+    waitForAllSearches();
+
+    function processResults(results, status, businessType) {
+      if (results.length >= 6) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          const photoContainer = document.getElementById("photo-container");
+
+          const cardContainer = document.createElement("div");
+          cardContainer.classList.add("card-container");
+          cardContainer.id = businessType;
+          for (let i = 0; i < 6; i++) {
+            // Create place card div and add class
+            const Card = document.createElement("div");
+            Card.classList.add("place-card");
+
+            // Business type
+            businessType =
+              businessType.charAt(0).toUpperCase() + businessType.slice(1);
+            const typeTag = document.createElement("span");
+            typeTag.classList.add("type-tag");
+            typeTag.textContent = businessType;
+
+            // Create image element
+            const photoUrl =
+              results[i].photos && results[i].photos.length > 0
+                ? results[i].photos[0].getUrl()
+                : defaultPhotoUrl;
+            const img = document.createElement("img");
+            img.src = photoUrl;
+            img.alt = results[i].name;
+            img.style.width = "100%";
+            img.style.height = "150px";
+
+            // Create rating div element
+            const rating = document.createElement("div");
+            rating.classList.add("business-info");
+            rating.innerHTML = `
+              <h2>${results[i].name}</h2>
+              <p>${results[i].vicinity}</p>
+            `;
+
+            // Star
+            const stars = printStar(Math.round(results[i].rating));
+            const ratingElement = document.createElement("p");
+            ratingElement.innerHTML = `${results[i].rating} ${stars}(${results[i].user_ratings_total})`;
+            rating.appendChild(typeTag);
+            rating.appendChild(ratingElement);
+
+            // Add "Get Directions" button
+            const directionsButton = document.createElement("button");
+            directionsButton.classList.add("directions-button");
+            directionsButton.innerHTML = `<ion-icon name="arrow-redo-circle-outline"></ion-icon>`;
+            directionsButton.addEventListener("click", () => {
+              const origin = `${latitude},${longitude}`;
+              const destination = `${results[
+                i
+              ].geometry.location.lat()},${results[i].geometry.location.lng()}`;
+              window.open(
+                `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`,
+                "_blank"
+              );
+            });
+            rating.appendChild(directionsButton);
+
+            // Append img and rating elements to restaurant card
+            Card.appendChild(img);
+            Card.appendChild(rating);
+
+            // Append restaurant card to photo container
+            cardContainer.appendChild(Card);
+            photoContainer.appendChild(cardContainer);
+          }
+        } else {
+          console.error("Error: " + status);
+        }
+      } else if (results.length >= 0) {
+        // Push results and businessType into the combineResults array
+        results.forEach((result) => {
+          combineResults.push({ result, businessType });
+          console.log(combineResults);
+        });
+      }
+    }
+  });
 }
 
-// Call getCurrentLocation() to request the user's location upon loading the page
-getCurrentLocation();
+function printStar(rating) {
+  let stars = "";
+
+  for (let i = 0; i < rating; i++) {
+    stars += "&#9733;";
+  }
+
+  return stars;
+}
+
+const filterButton = document.querySelector(".filter-btn");
+const dropdownContent = document.querySelector(".dropdown-content");
+
+filterButton.addEventListener("click", function () {
+  dropdownContent.classList.toggle("hidden");
+});
+
+function displayCombineResults() {
+  const photoContainer = document.getElementById("photo-container");
+  const cardContainer = document.createElement("div");
+  cardContainer.classList.add("card-container");
+  let resultsLength = combineResults.length;
+  end = false;
+  let j;
+
+  // Iterate through the first 6 items in combineResults and create cards
+  while (!end) {
+    if (resultsLength < 6) {
+      end = true;
+      j = 0;
+    } else {
+      j = resultsLength - 6;
+    }
+    for (let i = j; i < resultsLength; i++) {
+      const { result, businessType } = combineResults[i];
+
+      const Card = document.createElement("div");
+      Card.classList.add("place-card");
+
+      const typeTag = document.createElement("span");
+      typeTag.classList.add("type-tag");
+      typeTag.textContent = businessType;
+
+      const photoUrl =
+        result.photos && result.photos.length > 0
+          ? result.photos[0].getUrl()
+          : defaultPhotoUrl;
+      const img = document.createElement("img");
+      img.src = photoUrl;
+      img.alt = result.name;
+      img.style.width = "100%";
+      img.style.height = "150px";
+
+      const rating = document.createElement("div");
+      rating.classList.add("business-info");
+      rating.innerHTML = `
+      <h2>${result.name}</h2>
+      <p>${result.vicinity}</p>
+    `;
+
+      const stars = printStar(Math.round(result.rating));
+      const ratingElement = document.createElement("p");
+      ratingElement.innerHTML = `${result.rating} ${stars}(${result.user_ratings_total})`;
+      rating.appendChild(typeTag);
+      rating.appendChild(ratingElement);
+
+      const directionsButton = document.createElement("button");
+      directionsButton.classList.add("directions-button");
+      directionsButton.innerHTML = `<ion-icon name="arrow-redo-circle-outline"></ion-icon>`;
+      directionsButton.addEventListener("click", () => {
+        const origin = `${latitude},${longitude}`;
+        const destination = `${result.geometry.location.lat()},${result.geometry.location.lng()}`;
+        window.open(
+          `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`,
+          "_blank"
+        );
+      });
+      rating.appendChild(directionsButton);
+
+      Card.appendChild(img);
+      Card.appendChild(rating);
+
+      cardContainer.appendChild(Card);
+    }
+
+    // Append cardContainer to photoContainer
+    photoContainer.appendChild(cardContainer);
+    resultsLength = resultsLength - 6;
+  }
+  combineResults = [];
+}
