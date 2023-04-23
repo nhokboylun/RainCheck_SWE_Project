@@ -206,6 +206,7 @@ exit();
       </div>
 
       <div id="weatherInfo"></div>
+      <div class="forecast-container"></div>
       <div id="photo-container"></div>
     </main>
     <script src="Home.js"></script>

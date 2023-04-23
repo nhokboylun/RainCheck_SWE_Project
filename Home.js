@@ -53,6 +53,21 @@ async function getWeather(lat, lon) {
     );
 
     displayWeather(data);
+
+    // Fetch the 5 day / 3 hour forecast data
+    YOUR_API_KEY = "6e7bc156ddf0165f9cea962f15c3ead2"
+    const forecastResponse = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${YOUR_API_KEY}&units=imperial`
+    );
+
+    if (!forecastResponse.ok) {
+      throw new Error("Failed to fetch forecast data.");
+    }
+
+    const forecastData = await forecastResponse.json();
+    console.log(forecastData); // Log the forecast data for testing purposes
+    displayForecast(forecastData); // Call the displayForecast() function with the forecast data
+
     await searchActivities(lat, lon, activityTypes);
     displayCombineResults();
   } catch (error) {
@@ -60,13 +75,86 @@ async function getWeather(lat, lon) {
   }
 }
 
+
+
+// function displayWeather(data) {
+//   weatherInfo.innerHTML = `
+//     <h2>${data.name}, ${data.sys.country}</h2>
+//     <p>Temperature: ${data.main.temp.toFixed(2)} °F</p>
+//     <p>Weather: ${data.weather[0].description}</p>
+//   `;
+// }
+
 function displayWeather(data) {
+  const humidity = data.main.humidity;
+  const rainChance = data.rain && data.rain["1h"] ? `${(data.rain["1h"] * 100).toFixed(0)}%` : "0%";
+  const feelsLike = data.main.feels_like.toFixed(2);
+  const windSpeed = data.wind.speed.toFixed(2);
+
   weatherInfo.innerHTML = `
     <h2>${data.name}, ${data.sys.country}</h2>
     <p>Temperature: ${data.main.temp.toFixed(2)} °F</p>
     <p>Weather: ${data.weather[0].description}</p>
+    <p>Feels like: ${feelsLike} °F</p>
+    <p>Humidity: ${humidity}%</p>
+    <p>Rain Chance: ${rainChance}</p>
+    <p>Wind Speed: ${windSpeed} mph</p>
   `;
 }
+
+function displayForecast(data) {
+  const forecastContainer = document.querySelector(".forecast-container");
+  forecastContainer.innerHTML = "";
+
+  // create an object to group forecast items by date
+  const groupedForecast = data.list.reduce((obj, item) => {
+    const date = new Date(item.dt * 1000).toLocaleDateString();
+    if (!obj[date]) {
+      obj[date] = [];
+    }
+    obj[date].push(item);
+    return obj;
+  }, {});
+
+  // iterate over each group and create a separate column for each day
+  Object.entries(groupedForecast).forEach(([date, items]) => {
+    const forecastColumn = document.createElement("div");
+    forecastColumn.classList.add("forecast-column");
+
+    const forecastList = document.createElement("ul");
+    forecastList.classList.add("forecast-list");
+
+    // create a list item for each forecast item in the group
+    items.forEach(item => {
+      const forecastItem = document.createElement("li");
+      forecastItem.classList.add("forecast-item");
+
+      const dateTime = new Date(item.dt * 1000);
+      const time = dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const temp = item.main.temp.toFixed(2);
+      const description = item.weather[0].description;
+
+      forecastItem.innerHTML = `
+        <p>${time}</p>
+        <p>Temperature: ${temp} °F</p>
+        <p>Weather: ${description}</p>
+      `;
+
+      forecastList.appendChild(forecastItem);
+    });
+
+    const dateHeader = document.createElement("h3");
+    dateHeader.classList.add("date-header");
+    dateHeader.textContent = date;
+
+    forecastColumn.appendChild(dateHeader);
+    forecastColumn.appendChild(forecastList);
+    forecastContainer.appendChild(forecastColumn);
+  });
+}
+
+
 
 function getCurrentLocation() {
   if (navigator.geolocation) {
