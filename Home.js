@@ -43,6 +43,7 @@ async function getWeather(lat, lon) {
       const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
       indoorCheckboxes.forEach((checkbox) => {
         checkbox.disabled = true;
+        checkbox.checked = false;
       });
     } else {
       // Condition to display indoor activities
@@ -55,6 +56,7 @@ async function getWeather(lat, lon) {
       const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
       outdoorCheckboxes.forEach((checkbox) => {
         checkbox.disabled = true;
+        checkbox.checked = false;
       });
     }
 
@@ -251,11 +253,11 @@ function searchActivities(latitude, longitude, activityTypes) {
             Card.classList.add("place-card");
 
             // Business type
-            businessType =
-              businessType.charAt(0).toUpperCase() + businessType.slice(1);
             const typeTag = document.createElement("span");
             typeTag.classList.add("type-tag");
-            typeTag.textContent = businessType;
+            typeTag.classList.add("type-tag-" + businessType);
+            typeTag.textContent =
+              businessType.charAt(0).toUpperCase() + businessType.slice(1);
 
             // Create image element
             const photoUrl =
@@ -365,6 +367,7 @@ function displayCombineResults() {
 
       const typeTag = document.createElement("span");
       typeTag.classList.add("type-tag");
+      typeTag.classList.add("type-tag-" + businessType);
       typeTag.textContent =
         businessType.charAt(0).toUpperCase() + businessType.slice(1);
 

@@ -96,7 +96,7 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #484a4e;
   padding: 1rem;
   background-color: #6ab7ff;
@@ -169,7 +169,6 @@ main {
 }
 
 .type-tag {
-  background-color: #4caf50;
   color: white;
   border-radius: 4px;
   padding: 4px 8px;
@@ -279,4 +278,69 @@ main {
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
   width: 100%; /* make each item take up full width */
+}
+
+/* Business Type Color */
+.type-tag-gym {
+  background-color: #ff5252;
+}
+
+.type-tag-bar {
+  background-color: #ff9800;
+}
+
+.type-tag-cafe {
+  background-color: #ffc107;
+}
+
+.type-tag-restaurant {
+  background-color: #cddc39;
+}
+
+.type-tag-spa {
+  background-color: #8bc34a;
+}
+
+.type-tag-hair_care {
+  background-color: #009688;
+}
+
+.type-tag-bowling_alley {
+  background-color: #00bcd4;
+}
+
+.type-tag-art_gallery {
+  background-color: #03a9f4;
+}
+
+.type-tag-park {
+  background-color: #3f51b5;
+}
+
+.type-tag-city-hall {
+  background-color: #673ab7;
+}
+
+.type-tag-stadium {
+  background-color: #9c27b0;
+}
+
+.type-tag-zoo {
+  background-color: #e91e63;
+}
+
+.type-tag-aquarium {
+  background-color: #607d8b;
+}
+
+.type-tag-camping {
+  background-color: #795548;
+}
+
+.type-tag-golf_course {
+  background-color: #9e9e9e;
+}
+
+.type-tag-natural_feature {
+  background-color: #4caf50;
 }
