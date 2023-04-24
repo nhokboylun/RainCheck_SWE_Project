@@ -32,16 +32,29 @@ async function getWeather(lat, lon) {
 
     const data = await response.json();
 
-    // Move this block inside the try block and after fetching weather data
+    // Condition to display outdoor activities
     if (data.main.temp > 70) {
       const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
       outdoorCheckboxes.forEach((checkbox) => {
+        checkbox.disabled = false;
         checkbox.checked = true;
       });
-    } else {
+
       const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
       indoorCheckboxes.forEach((checkbox) => {
+        checkbox.disabled = true;
+      });
+    } else {
+      // Condition to display indoor activities
+      const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
+      indoorCheckboxes.forEach((checkbox) => {
+        checkbox.disabled = false;
         checkbox.checked = true;
+      });
+
+      const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
+      outdoorCheckboxes.forEach((checkbox) => {
+        checkbox.disabled = true;
       });
     }
 
@@ -55,7 +68,7 @@ async function getWeather(lat, lon) {
     displayWeather(data);
 
     // Fetch the 5 day / 3 hour forecast data
-    YOUR_API_KEY = "6e7bc156ddf0165f9cea962f15c3ead2"
+    YOUR_API_KEY = "6e7bc156ddf0165f9cea962f15c3ead2";
     const forecastResponse = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${YOUR_API_KEY}&units=imperial`
     );
@@ -65,29 +78,39 @@ async function getWeather(lat, lon) {
     }
 
     const forecastData = await forecastResponse.json();
-    console.log(forecastData); // Log the forecast data for testing purposes
     displayForecast(forecastData); // Call the displayForecast() function with the forecast data
 
     await searchActivities(lat, lon, activityTypes);
     displayCombineResults();
+
+    // Add event listener for each filter, if checkboxes is checked. Display result else, hide it.
+    const activityCheckboxes = document.querySelectorAll(".activity-checkbox");
+
+    activityCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        const targetElement = document.getElementById(checkbox.value);
+        if (targetElement) {
+          targetElement.classList.toggle("hidden");
+        }
+        const targetElementInCombineResults = document.querySelectorAll(
+          `.combine-results .${checkbox.value}`
+        );
+        targetElementInCombineResults.forEach((element) => {
+          element.classList.toggle("hidden");
+        });
+      });
+    });
   } catch (error) {
     alert(`Error: ${error.message}`);
   }
 }
 
-
-
-// function displayWeather(data) {
-//   weatherInfo.innerHTML = `
-//     <h2>${data.name}, ${data.sys.country}</h2>
-//     <p>Temperature: ${data.main.temp.toFixed(2)} °F</p>
-//     <p>Weather: ${data.weather[0].description}</p>
-//   `;
-// }
-
 function displayWeather(data) {
   const humidity = data.main.humidity;
-  const rainChance = data.rain && data.rain["1h"] ? `${(data.rain["1h"] * 100).toFixed(0)}%` : "0%";
+  const rainChance =
+    data.rain && data.rain["1h"]
+      ? `${(data.rain["1h"] * 100).toFixed(0)}%`
+      : "0%";
   const feelsLike = data.main.feels_like.toFixed(2);
   const windSpeed = data.wind.speed.toFixed(2);
 
@@ -125,12 +148,15 @@ function displayForecast(data) {
     forecastList.classList.add("forecast-list");
 
     // create a list item for each forecast item in the group
-    items.forEach(item => {
+    items.forEach((item) => {
       const forecastItem = document.createElement("li");
       forecastItem.classList.add("forecast-item");
 
       const dateTime = new Date(item.dt * 1000);
-      const time = dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const time = dateTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 
       const temp = item.main.temp.toFixed(2);
       const description = item.weather[0].description;
@@ -153,8 +179,6 @@ function displayForecast(data) {
     forecastContainer.appendChild(forecastColumn);
   });
 }
-
-
 
 function getCurrentLocation() {
   if (navigator.geolocation) {
@@ -217,6 +241,11 @@ function searchActivities(latitude, longitude, activityTypes) {
           cardContainer.classList.add("card-container");
           cardContainer.id = businessType;
           for (let i = 0; i < 6; i++) {
+            if (typeof results[i].rating === "undefined") {
+              results.splice(i, 1);
+              i--;
+              continue;
+            }
             // Create place card div and add class
             const Card = document.createElement("div");
             Card.classList.add("place-card");
@@ -284,8 +313,9 @@ function searchActivities(latitude, longitude, activityTypes) {
       } else if (results.length >= 0) {
         // Push results and businessType into the combineResults array
         results.forEach((result) => {
-          combineResults.push({ result, businessType });
-          console.log(combineResults);
+          if (typeof result.rating !== "undefined") {
+            combineResults.push({ result, businessType });
+          }
         });
       }
     }
@@ -313,6 +343,7 @@ function displayCombineResults() {
   const photoContainer = document.getElementById("photo-container");
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card-container");
+  cardContainer.classList.add("combine-results");
   let resultsLength = combineResults.length;
   end = false;
   let j;
@@ -330,10 +361,12 @@ function displayCombineResults() {
 
       const Card = document.createElement("div");
       Card.classList.add("place-card");
+      Card.classList.add(businessType);
 
       const typeTag = document.createElement("span");
       typeTag.classList.add("type-tag");
-      typeTag.textContent = businessType;
+      typeTag.textContent =
+        businessType.charAt(0).toUpperCase() + businessType.slice(1);
 
       const photoUrl =
         result.photos && result.photos.length > 0
