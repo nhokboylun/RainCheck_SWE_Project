@@ -34,7 +34,7 @@ async function getWeather(lat, lon) {
     const data = await response.json();
 
     // Condition to display outdoor activities
-    if (data.main.temp > 70) {
+    if (data.main.temp > 40 && !data.rain) {
       const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
       outdoorCheckboxes.forEach((checkbox) => {
         checkbox.disabled = false;
@@ -108,6 +108,7 @@ async function getWeather(lat, lon) {
     alert(`Error: ${error.message}`);
   }
 }
+
 
 function displayWeather(data) {
   const humidity = data.main.humidity;
