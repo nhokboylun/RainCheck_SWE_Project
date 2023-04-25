@@ -243,7 +243,10 @@ function searchActivities(latitude, longitude, activityTypes) {
           cardContainer.classList.add("card-container");
           cardContainer.id = businessType;
           for (let i = 0; i < 6; i++) {
-            if (typeof results[i].rating === "undefined") {
+            if (
+              typeof results[i].rating === "undefined" ||
+              typeof results[i].name === "undefined"
+            ) {
               results.splice(i, 1);
               i--;
               continue;
@@ -315,7 +318,10 @@ function searchActivities(latitude, longitude, activityTypes) {
       } else if (results.length >= 0) {
         // Push results and businessType into the combineResults array
         results.forEach((result) => {
-          if (typeof result.rating !== "undefined") {
+          if (
+            typeof result.rating !== "undefined" &&
+            typeof result.name !== "undefined"
+          ) {
             combineResults.push({ result, businessType });
           }
         });
@@ -384,9 +390,9 @@ function displayCombineResults() {
       const rating = document.createElement("div");
       rating.classList.add("business-info");
       rating.innerHTML = `
-      <h2>${result.name}</h2>
-      <p>${result.vicinity}</p>
-    `;
+        <h2>${result.name}</h2>
+        <p>${result.vicinity}</p>
+      `;
 
       const stars = printStar(Math.round(result.rating));
       const ratingElement = document.createElement("p");
