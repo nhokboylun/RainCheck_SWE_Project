@@ -163,9 +163,9 @@
       }
       $firstname_c =  $_POST['firstname'];
       $lastname_c =  $_POST['lastname'];
-      $password_c = $_POST['pass'];
+      $hashed_password_c = password_hash($_POST['pass'], PASSWORD_DEFAULT);
       $tel_c = $_POST['phonenumber'];
-      $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$password_c', '$tel_c', '$code')";
+      $sql = "INSERT INTO Users (firstname,lastname,email,password,phonenumber,Code) VALUES ('$firstname_c', '$lastname_c', '$email_c', '$hashed_password_c', '$tel_c', '$code')";
       mysqli_query($conn, $sql);
       $id = rand(1, 2);
       $sqlInputResetCode = "SELECT provider_value FROM google_oauth WHERE id = $id;";
