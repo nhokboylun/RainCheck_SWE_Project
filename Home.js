@@ -33,21 +33,29 @@ async function getWeather(lat, lon) {
 
     const data = await response.json();
 
-    // Condition to display outdoor activities
-    if (data.main.temp > 40 && !data.rain) {
+    // Condition to display indoor activities
+    if (
+      data.main.temp < 40 ||
+      data.weather[0].description === "light rain" ||
+      data.weather[0].description === "moderate rain" ||
+      data.weather[0].description === "hurricane" ||
+      data.weather[0].description === "thunder storm" ||
+      data.weather[0].description === "snow" ||
+      data.weather[0].description === "drizzle"
+    ) {
       const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
       outdoorCheckboxes.forEach((checkbox) => {
-        checkbox.disabled = false;
-        checkbox.checked = true;
+        checkbox.disabled = true;
+        checkbox.checked = false;
       });
 
       const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
       indoorCheckboxes.forEach((checkbox) => {
-        checkbox.disabled = true;
-        checkbox.checked = false;
+        checkbox.disabled = false;
+        checkbox.checked = true;
       });
     } else {
-      // Condition to display indoor activities
+      // Condition to display all activities
       const indoorCheckboxes = document.querySelectorAll(".indoor-activity");
       indoorCheckboxes.forEach((checkbox) => {
         checkbox.disabled = false;
@@ -56,8 +64,8 @@ async function getWeather(lat, lon) {
 
       const outdoorCheckboxes = document.querySelectorAll(".outdoor-activity");
       outdoorCheckboxes.forEach((checkbox) => {
-        checkbox.disabled = true;
-        checkbox.checked = false;
+        checkbox.disabled = false;
+        checkbox.checked = true;
       });
     }
 
@@ -108,7 +116,6 @@ async function getWeather(lat, lon) {
     alert(`Error: ${error.message}`);
   }
 }
-
 
 function displayWeather(data) {
   const humidity = data.main.humidity;
