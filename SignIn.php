@@ -14,17 +14,17 @@
     $sqlCheckMatchPassword = "SELECT password FROM Users WHERE email ='$username_c'";
     $resultCheckMatchPassword= $conn->query($sqlCheckMatchPassword);
     $db_password = $resultCheckMatchPassword->fetch_assoc()['password'];
-    $sql= "SELECT email FROM Users WHERE email = '$username_c' AND password = '$password_c' AND EmailStatus = 1";
+    $sql= "SELECT email FROM Users WHERE email = '$username_c' AND EmailStatus = 1";
     $result = $conn->query($sql);
     ob_end_flush();
     mysqli_close($conn);
-    if ($result->num_rows === 1 && strcmp($password_c,$db_password) == 0){
+    if ($result->num_rows === 1 && password_verify($password_c, $db_password)){
       session_start();
       $_SESSION['user'] = $username_c;
       header("Location: ./Home.php");
       exit();
     } 
-    echo "<script>alert('Either username or password or both is incorrect. Or email is not activate. Please try again!')</script>";
+    echo "<script>alert('Either username or password or both is incorrect. Or email is not activated. Please try again!')</script>";
     echo "<p>You are being redirected to the login page.</p>";
     echo "<meta http-equiv='refresh' content='2;url=https://melvin-projects.com/RainCheck/index.html'>";
   } else {

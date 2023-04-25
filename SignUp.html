@@ -14,7 +14,13 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+      function hashPassword(password) {
+        var hashedPassword = CryptoJS.SHA256(password);
+        return hashedPassword.toString(CryptoJS.enc.Hex);
+      }
+
       function validatePassword() {
         const password = document.getElementsByName("pass")[0];
         const confirmPassword = document.getElementsByName("confirmPass")[0];
@@ -40,7 +46,17 @@
       }
 
       function validateForm() {
-        return validatePassword();
+        if (validatePassword()) {
+          const passwordInput = document.getElementsByName("pass")[0];
+          const hashedPasswordInput = document.createElement("input");
+          hashedPasswordInput.type = "hidden";
+          hashedPasswordInput.name = "hashedPass";
+          hashedPasswordInput.value = hashPassword(passwordInput.value);
+          document.forms["SignUpForm"].appendChild(hashedPasswordInput);
+          passwordInput.value = "";
+          return true;
+        }
+        return false;
       }
       function filterNameInput(event) {
         event.target.value = event.target.value.replace(/[^A-Za-z]/g, "");
@@ -156,7 +172,7 @@
         </li>
       </ul>
 
-      <p><input type="checkbox" />I agree with the terms of use</p>
+      <p><input type="checkbox" required/>I agree with the terms of use</p>
       <input type="submit" id="btn" value="Sign Up" name="submit" />
       <p>Already have an account? <a href="./index.html">Login Here</a></p>
     </form>
