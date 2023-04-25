@@ -2,6 +2,7 @@
 getCurrentLocation();
 
 let combineResults = [];
+let alreadyDisplay = [];
 const defaultPhotoUrl = "./Logo.png";
 const locationSearch = document.getElementById("locationSearch");
 const weatherInfo = document.getElementById("weatherInfo");
@@ -83,7 +84,8 @@ async function getWeather(lat, lon) {
     displayForecast(forecastData); // Call the displayForecast() function with the forecast data
 
     await searchActivities(lat, lon, activityTypes);
-    displayCombineResults();
+    displayCombineResults(lat, lon);
+    alreadyDisplay = [];
 
     // Add event listener for each filter, if checkboxes is checked. Display result else, hide it.
     const activityCheckboxes = document.querySelectorAll(".activity-checkbox");
@@ -245,12 +247,19 @@ function searchActivities(latitude, longitude, activityTypes) {
           for (let i = 0; i < 6; i++) {
             if (
               typeof results[i].rating === "undefined" ||
-              typeof results[i].name === "undefined"
+              typeof results[i].name === "undefined" ||
+              typeof results[i].vicinity === "undefined" ||
+              alreadyDisplay.some((elem) => {
+                return elem === results[i].name;
+              })
             ) {
               results.splice(i, 1);
               i--;
               continue;
             }
+            // Add place to already display
+            alreadyDisplay.push(results[i].name);
+
             // Create place card div and add class
             const Card = document.createElement("div");
             Card.classList.add("place-card");
@@ -320,9 +329,14 @@ function searchActivities(latitude, longitude, activityTypes) {
         results.forEach((result) => {
           if (
             typeof result.rating !== "undefined" &&
-            typeof result.name !== "undefined"
+            typeof result.name !== "undefined" &&
+            typeof result.vicinity !== "undefined" &&
+            !alreadyDisplay.some((elem) => {
+              return elem === result.name;
+            })
           ) {
             combineResults.push({ result, businessType });
+            alreadyDisplay.push(result.name);
           }
         });
       }
@@ -347,7 +361,7 @@ filterButton.addEventListener("click", function () {
   dropdownContent.classList.toggle("hidden");
 });
 
-function displayCombineResults() {
+function displayCombineResults(latitude, longitude) {
   const photoContainer = document.getElementById("photo-container");
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card-container");
