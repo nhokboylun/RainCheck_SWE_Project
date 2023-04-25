@@ -279,8 +279,7 @@ function searchActivities(latitude, longitude, activityTypes) {
             const img = document.createElement("img");
             img.src = photoUrl;
             img.alt = results[i].name;
-            img.style.width = "100%";
-            img.style.height = "150px";
+            img.classList.add("business-img");
 
             // Create rating div element
             const rating = document.createElement("div");
@@ -398,8 +397,7 @@ function displayCombineResults(latitude, longitude) {
       const img = document.createElement("img");
       img.src = photoUrl;
       img.alt = result.name;
-      img.style.width = "100%";
-      img.style.height = "150px";
+      img.classList.add("business-img");
 
       const rating = document.createElement("div");
       rating.classList.add("business-info");

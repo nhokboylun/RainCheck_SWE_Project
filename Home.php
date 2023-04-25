@@ -39,7 +39,7 @@ exit();
   <body>
     <header>
       <div class="title">
-        <img style="width: 10%" src="./Logo.png" alt="Logo" />
+        <img class="logo" src="./Logo.png" alt="Logo" />
         <span>RAINCHECK</span>
       </div>
       <nav>
