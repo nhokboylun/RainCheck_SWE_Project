@@ -25,7 +25,8 @@ exit();
       rel="stylesheet"
     />
     <link rel="stylesheet" href="Home.css" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDedATs1gxl-sUVIeqFtK4oq-xQ6P8PN8s&libraries=places"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDedATs1gxl-sUVIeqFtK4oq-xQ6P8PN8s&libraries=places"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAShn2zrDxo7sD_ogKMvJvyqswGR9CPNGo&libraries=places"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
