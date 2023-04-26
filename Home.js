@@ -94,24 +94,6 @@ async function getWeather(lat, lon) {
     await searchActivities(lat, lon, activityTypes);
     displayCombineResults(lat, lon);
     alreadyDisplay = [];
-
-    // Add event listener for each filter, if checkboxes is checked. Display result else, hide it.
-    const activityCheckboxes = document.querySelectorAll(".activity-checkbox");
-
-    activityCheckboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", () => {
-        const targetElement = document.getElementById(checkbox.value);
-        if (targetElement) {
-          targetElement.classList.toggle("hidden");
-        }
-        const targetElementInCombineResults = document.querySelectorAll(
-          `.combine-results .${checkbox.value}`
-        );
-        targetElementInCombineResults.forEach((element) => {
-          element.classList.toggle("hidden");
-        });
-      });
-    });
   } catch (error) {
     alert(`Error: ${error.message}`);
   }
@@ -193,6 +175,7 @@ function displayForecast(data) {
 }
 
 function getCurrentLocation() {
+  document.getElementById("locationSearch").value = "";
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -245,6 +228,9 @@ function searchActivities(latitude, longitude, activityTypes) {
     waitForAllSearches();
 
     function processResults(results, status, businessType) {
+      if (!results) {
+        return;
+      }
       if (results.length >= 6) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const photoContainer = document.getElementById("photo-container");
@@ -252,8 +238,17 @@ function searchActivities(latitude, longitude, activityTypes) {
           const cardContainer = document.createElement("div");
           cardContainer.classList.add("card-container");
           cardContainer.id = businessType;
-          for (let i = 0; i < 6; i++) {
+          let displayedResults = 0;
+          let i = 0;
+
+          while (i < results.length && displayedResults < 6) {
+            if (results[i] === undefined) {
+              i++;
+              continue;
+            }
+
             if (
+              !results[i] ||
               typeof results[i].rating === "undefined" ||
               typeof results[i].name === "undefined" ||
               typeof results[i].vicinity === "undefined" ||
@@ -262,7 +257,6 @@ function searchActivities(latitude, longitude, activityTypes) {
               })
             ) {
               results.splice(i, 1);
-              i--;
               continue;
             }
             // Add place to already display
@@ -327,6 +321,8 @@ function searchActivities(latitude, longitude, activityTypes) {
             // Append restaurant card to photo container
             cardContainer.appendChild(Card);
             photoContainer.appendChild(cardContainer);
+            i++;
+            displayedResults++;
           }
         } else {
           console.error("Error: " + status);
@@ -335,6 +331,7 @@ function searchActivities(latitude, longitude, activityTypes) {
         // Push results and businessType into the combineResults array
         results.forEach((result) => {
           if (
+            result &&
             typeof result.rating !== "undefined" &&
             typeof result.name !== "undefined" &&
             typeof result.vicinity !== "undefined" &&
@@ -445,3 +442,20 @@ function displayCombineResults(latitude, longitude) {
   }
   combineResults = [];
 }
+
+const activityCheckboxes = document.querySelectorAll(".activity-checkbox");
+
+activityCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    const targetElement = document.getElementById(checkbox.value);
+    if (targetElement) {
+      targetElement.classList.toggle("hidden");
+    }
+    const targetElementInCombineResults = document.querySelectorAll(
+      `.combine-results .${checkbox.value}`
+    );
+    targetElementInCombineResults.forEach((element) => {
+      element.classList.toggle("hidden");
+    });
+  });
+});
